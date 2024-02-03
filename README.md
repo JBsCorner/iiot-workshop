@@ -47,4 +47,8 @@ The Controllino is a programmable controller based on the Arduino platform, spec
 
 **STEP BY STEP**
 1. Download and install Arduino IDE from the official webpage: [https://www.arduino.cc/](https://www.arduino.cc/).
-2. 
+2. Controllino setup: 
+ * Connect the Controllino Maxi to your Laptop or PC using the USB cable.
+ * Connect Controllino's Power Supply (USB cable might be enough for some applications).
+ * Install Controllino's library and Board Hardware Definition following [these](https://www.controllino.com/board-library-setup-in-arduino-ide/) steps.
+ * You can load and test some of the provided examples from *File > Examples* to validate proper operation.

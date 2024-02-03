@@ -1,6 +1,6 @@
 # SENSOR TO CLOUD: HANDS-ON IIOT WORKSHOP
 
-This repository contains a hands-on workshop designed to emulate a complete industrial system: from the sensors that take measurements of the industrial process to the Cloud tools that allow for the storage and analysis of these data.
+This repository contains a hands-on workshop designed to emulate a complete industrial system: from the sensors taking measurements of the industrial process to the Cloud tools that allow for the storage and analysis of these data.
 
 ## USE CASE OVERVIEW
 TBD
@@ -9,7 +9,7 @@ TBD
 TBD
 
 ## PHASE 01: SENSING THE PHYSICAL WORLD
-In this first step, we will use a temperature sensor to determine the temperature of the process at each moment. For this purpose, in addition to a temperature sensor, we will need a device capable of taking measurements every few seconds and recording them. 
+In this first phase, we will use a temperature sensor to determine the temperature of the process at each moment. For this purpose, in addition to a temperature sensor, we will need a device capable of taking measurements every few seconds and recording them. 
 
 The sensor we will be using is a basic temperature and humidity sensor, specifically the DHT11 model. This sensor offers the following key features:
 | Feature        | DHT11                        |
@@ -62,5 +62,16 @@ The Controllino is a programmable controller based on the Arduino platform, spec
     * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_dht11.ino) sketch code into Arduino IDE.
     * Upload the code into the Controllino board.
     * *Voilà*, now you should be able to see humidity and temperature readings being printed on your serial monitor.
+      
    ![controllino_dht11_serial_monitor](https://github.com/JBsCorner/iiot-workshop/blob/main/images/controllino_dht11_serial_monitor.png?raw=true)
 
+## PHASE 02: BRIDGING THE OT-IT GAP
+We have successfully digitized various physical signals from our process. However, the true essence of IoT lies not just in data capture, but in its transmission for later processing and analysis. Therefore, the next stage involves enabling communication from our industrial device. We will use a specific industrial protocol to send the data to platforms capable of analyzing and maximizing the potential of this information.
+
+### 02.A: CONTROLLINO THROUGH MODBUS TCP
+
+Modbus TCP is a widely used communication protocol that enables the exchange of data between devices in industrial networks. It is an extension of the Modbus protocol, adapted for use over TCP/IP networks, which allows for the seamless integration of industrial devices with the infrastructure of the Internet. Essentially, Modbus TCP facilitates communication between a server, such as a PLC (Programmable Logic Controller) or an industrial computer, and one or more client devices. It operates on a client-server model, where the client initiates requests for data, and the server responds with the requested information. This protocol is highly regarded for its simplicity, reliability and ease of implementation.
+
+Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
+
+![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus.png?raw=true)

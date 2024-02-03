@@ -55,4 +55,9 @@ The Controllino is a programmable controller based on the Arduino platform, spec
     * You can load and test some of the provided examples from *File > Examples* to validate proper operation.
 3. Using the jumper wires, connect de DHT11 sensor to the Controllino Maxi.
    ![imagen controllino_dht11_wiring](https://github.com/JBsCorner/iiot-workshop/blob/main/images/controllino_dht11_wiring.png?raw=true)
-5.aa 
+4. Program the Controllino to read from DHT11 sensor and print humidity and temperature:
+    * Open Arduino IDE.
+    * Install *DHT sensor library* by Adafruit from *Tools > Manage Libraries* (1.4.6 used).
+    * Create a new code sketch from *File > New Sketch*.
+    * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_dht11.ino) sketch code into Arduino IDE.
+    * Upload the code into the Controllino board.

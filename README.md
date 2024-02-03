@@ -26,9 +26,7 @@ The sensor we will be using is a basic temperature and humidity sensor, specific
 | Accuracy        | +/- 5%                       |
 | Resolution      | 1%                           |
 
-![imagen dht11](https://github.com/JBsCorner/iiot-workshop/blob/main/images/dht11.jpg?raw=true)
-
-We can find such sensors both 
+![imagen dht11](https://github.com/JBsCorner/iiot-workshop/blob/main/images/dht11_board.png?raw=true)
 
 ### 01.A: CONTROLLINO MAXI
 The Controllino is a programmable controller based on the Arduino platform, specifically designed for industrial automation applications projects. This device merges the ease of Arduino programming with the necessary capabilities to control and operate industrial machinery, manufacturing processes, and building automation systems. It offers a variety of digital and analog inputs and outputs and can handle high current loads, making it ideal for a broad range of industrial applications. Its compatibility with Arduino software allows engineers and developers to easily create customized solutions, while its sturdy construction ensures reliability in demanding industrial environments.
@@ -41,9 +39,12 @@ The Controllino is a programmable controller based on the Arduino platform, spec
 * Controllino Power Supply.
 * USB Type-B to Type-A connector.
 * DHT11 Sensor.
-* PC/Laptop (Windows OS used for this tutorial).
+* 3 Jumper wires.
+* PC/Laptop (Windows 10 used).
 
 **Software:**
-* Arduino IDE.
+* Arduino IDE (2.2.1 used)
 
 **STEP BY STEP**
+1. Download and install Arduino IDE from the official webpage: [https://www.arduino.cc/](https://www.arduino.cc/).
+2. 

@@ -72,6 +72,26 @@ We have successfully digitized various physical signals from our process. Howeve
 
 Modbus TCP is a widely used communication protocol that enables the exchange of data between devices in industrial networks. It is an extension of the Modbus protocol, adapted for use over TCP/IP networks, which allows for the seamless integration of industrial devices with the infrastructure of the Internet. Essentially, Modbus TCP facilitates communication between a server, such as a PLC (Programmable Logic Controller) or an industrial computer, and one or more client devices. It operates on a client-server model, where the client initiates requests for data, and the server responds with the requested information. This protocol is highly regarded for its simplicity, reliability and ease of implementation.
 
+![modbus_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_logo.png?raw=true)
+
 Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
 
 ![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_tables.png?raw=true)
+
+**REQUIREMENTS**
+
+**Hardware:**
+* Previously used HW.
+* Ethernet cable.
+
+**Software:**
+* Previously used SW.
+* Node RED
+
+**STEP BY STEP**
+1. Download and install Node-RED by following the steps indicated on its official website: [https://nodered.org/](https://nodered.org/)
+    * npm (used 10.4.0).
+    * Node.js (used 20.11.0).
+    * Node-RED (used 3.1.3).
+2. Our Controllino will act as Modbus Server:
+    * * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_dht11.ino) sketch code into Arduino IDE.

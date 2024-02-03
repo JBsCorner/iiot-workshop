@@ -74,4 +74,4 @@ Modbus TCP is a widely used communication protocol that enables the exchange of 
 
 Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
 
-![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus.png?raw=true)
+![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_tables.png?raw=true)

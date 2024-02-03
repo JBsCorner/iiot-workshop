@@ -61,3 +61,6 @@ The Controllino is a programmable controller based on the Arduino platform, spec
     * Create a new code sketch from *File > New Sketch*.
     * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_dht11.ino) sketch code into Arduino IDE.
     * Upload the code into the Controllino board.
+    * *Voilà*, now you should be able to see humidity and temperature readings being printed on your serial monitor.
+   ![controllino_dht11_serial_monitor](https://github.com/JBsCorner/iiot-workshop/blob/main/images/controllino_dht11_serial_monitor.png?raw=true)
+

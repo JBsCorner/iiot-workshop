@@ -93,6 +93,7 @@ Modbus supports various types of registers and operations that facilitate divers
     * Install [Arduino Modbus library](https://www.arduino.cc/reference/en/libraries/arduinomodbus/) in your Arduino IDE (1.0.9 used).
     * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_modbus.ino) sketch code into Arduino IDE.
     * Upload the code into the Controllino board.
+      
 2. Our PC will act as the Modbus Client. First we need to connect them together:
     * Connect the Controllino to your PC or Laptop using the Ethernet cable.
     * Edit you Ethernet network settings as follows.
@@ -100,20 +101,26 @@ Modbus supports various types of registers and operations that facilitate divers
         * Subnet Mask: 255.255.255.0
         * Default Gatewat: 10.0.0.1
    * Last step is OS specific. In Windows, you may find these settings at *Control Panel > Network and Sharing Center > Ethernet > Internet Protocol Version 4 (TCP/IPv4) > Properties*.
+     
 3. We will use Node-RED to create our Modbus client and HMI. Download and install Node-RED by following the steps indicated on its official website: [https://nodered.org/](https://nodered.org/)
     * npm (used 10.4.0).
     * Node.js (used 20.11.0).
     * Node-RED (used 3.1.3).
+      
 4. Install the following Node-RED modules:
     * node-red-contrib-modbus (5.28.0 used).
     * node-red-dashboard (3.3.1 used).
+      
 5. First, we will create a simple Modbus client and test Client-Server connectivity.
     * Start Node-RED.
     * Import [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_client.json) into your environment.
     * You should now be able to read Controllino Modbus registries in Node RED debug tab as well as update them by clicking on the different provided Inject Nodes.
       ![nodered_modbusclient](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbusclient.png?raw=true)
+
 6. We will now create an HMI using Node-RED dashboard capabilities:
     * Import [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
       ![nodered_modbushmi](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmi.png?raw=true)
+      
     * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your PLC (Controllino) from this HMI.
       ![nodered_modbushmiui](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmiui.png?raw=true)
+      

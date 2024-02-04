@@ -93,5 +93,14 @@ Modbus supports various types of registers and operations that facilitate divers
     * npm (used 10.4.0).
     * Node.js (used 20.11.0).
     * Node-RED (used 3.1.3).
-2. Our Controllino will act as Modbus Server:
-    * * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_dht11.ino) sketch code into Arduino IDE.
+2. Our Controllino will act as the Modbus Server. In order to prepare the Controllino for Modbus communication:
+    * Install [Arduino Modbus library](https://www.arduino.cc/reference/en/libraries/arduinomodbus/) in your Arduino IDE (1.0.9 used).
+    * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_modbus.ino) sketch code into Arduino IDE.
+    * Upload the code into the Controllino board.
+4. Our PC will act as the Modbus Client. First we need to connect them together:
+    * Connect the Controllino to your PC or Laptop using the Ethernet cable.
+    * Edit you Ethernet network settings as follows.
+        * IP: 10.0.0.2
+        * Subnet Mask: 255.255.255.0
+   * Last step is OS specific. In Windows, you may find these settings at *Control Panel > Network and Sharing Center > Ethernet > Internet Protocol Version 4 (TCP/IPv4) > Properties*.
+5. 

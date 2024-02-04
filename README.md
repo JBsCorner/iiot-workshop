@@ -65,8 +65,8 @@ The Controllino is a programmable controller based on the Arduino platform, spec
       
    ![controllino_dht11_serial_monitor](https://github.com/JBsCorner/iiot-workshop/blob/main/images/controllino_dht11_serial_monitor.png?raw=true)
 
-## PHASE 02: BRIDGING THE OT-IT GAP
-We have successfully digitized various physical signals from our process. However, the true essence of IoT lies not just in data capture, but in its transmission for later processing and analysis. Therefore, the next stage involves enabling communication from our industrial device. We will use a specific industrial protocol to send the data to platforms capable of analyzing and maximizing the potential of this information.
+## PHASE 02: VISUALIZING THE INDUSTRIAL PROCESS
+We have successfully digitized various physical signals from our process. However, it is currently difficult for a human to know the status of the industrial process or to act upon it. Therefore, in this phase, we will establish communication through industrial protocols between our industrial device and an HMI (Human Machine Interface) with the goal of being able to visualize the information and allow basic actions.
 
 ### 02.A: CONTROLLINO THROUGH MODBUS TCP
 
@@ -121,6 +121,6 @@ Modbus supports various types of registers and operations that facilitate divers
     * Import [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
       ![nodered_modbushmi](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmi.png?raw=true)
       
-    * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your PLC (Controllino) from this HMI.
+    * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your industrial device from this HMI.
       ![nodered_modbushmiui](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmiui.png?raw=true)
       

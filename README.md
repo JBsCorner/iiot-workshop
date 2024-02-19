@@ -151,28 +151,28 @@ In order for any IoT device to interact with AWS IoT Platform, it needs to be re
     * Your AWS Account ID and user credentials will be provided to you by your instructor.
     * Navigate to [AWS Home Page](https://aws.amazon.com/) and click on Sign In.
     * AWS Sing-in page will now load. Select the "IAM user" sign-in option and enter your Account ID and user credentials.
-      
-![mqtt_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/aws_login.png?raw=true)
-
-   * Once in the console, select the US East (N. Virginia) - us-east-1 region. This option can typically be found at the top-right corner of the AWS Management Console.
-1. As its name suggests, IoT Core is the central service of the AWS IoT suite. We can register a new IoT device from IoT Core:
+      ![aws_login](https://github.com/JBsCorner/iiot-workshop/blob/main/images/aws_login.png?raw=true)
+    * Once in the console, select the US East (N. Virginia) - us-east-1 region. This option can typically be found at the top-right corner of the AWS Management Console.
+2. As its name suggests, IoT Core is the central service of the AWS IoT suite. We can register a new IoT device from IoT Core:
     * Navigate to the IoT Core service.
+      ![aws_iot_core](https://github.com/JBsCorner/iiot-workshop/blob/main/images/aws_iot_core.png?raw=true)
     * From the left pane, click on *Manage > All devices > Things*.
     * Now, click on *Create Things*, select *Create single thing*, and enter the following name for your thing: *{your user name}-thing* (i.e. jbscorner-thing).
     * Click *Next* without any further configuration and select *Skip creating a certificate at this time* to finalize your IoT device registration.
     * Your newly created thing will appear under *Manage > All devices > Things*.
-2. No device can connect and exchange data with IoT Core without having been previously authorized to do so. Next, we will create a policy for this purpose:
+3. No device can connect and exchange data with IoT Core without having been previously authorized to do so. Next, we will create a policy for this purpose:
     * From the left pane, click on *Security > Policies*.
     * Now, click on *Create Policy* and enter the following name for your policy: *{your user name}-policy* .
     * Copy [this policy](https://github.com/JBsCorner/iiot-workshop/blob/main/code/aws/aws_iotcore_thing_policy.json) statement into Policy Document JSON editor. 
     * You must replace the literals *region* and *account-id* in each ARN with those corresponding to your account.
     * Click *Next* without any further configuration to finalize your IoT Policy creation.
     * Your newly created policy will appear under *Security > Policies*.
-3. Lastly, we must provide a mechanism for the device to identify itself when connecting to the platform. We will do this by creating a unique certificate that we will assign to the device.
+4. Lastly, we must provide a mechanism for the device to identify itself when connecting to the platform. We will do this by creating a unique certificate that we will assign to the device.
     * From the left pane, click on *Security > Certificates*.
     * Now, click on *Add Certificate > Create Certificate*.
     * Select *Auto-generate new certificate* and *Active* as the initial status.
     * Download and save for later both Public and Private keys together with AWS Root CA.
+      ![aws_iot_certificates](https://github.com/JBsCorner/iiot-workshop/blob/main/images/aws_iot_certificates.png?raw=true)
     * Your newly created certificate will appear under *Security > Certificates*.
     * Select your certificate, *Actions > Attach Policy* to link your previously created policy to your certificate.
     * Select again your certificate, *Actions > Attach to Things* to link both yout certificate and policy with your device.

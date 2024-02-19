@@ -154,7 +154,7 @@ In order for any IoT device to interact with AWS IoT Platform, it needs to be re
       
 ![mqtt_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/aws_login.png?raw=true)
 
-    * Once in the console, select the US East (N. Virginia) - us-east-1 region. This option can typically be found at the top-right corner of the AWS Management Console.
+   * Once in the console, select the US East (N. Virginia) - us-east-1 region. This option can typically be found at the top-right corner of the AWS Management Console.
 1. As its name suggests, IoT Core is the central service of the AWS IoT suite. We can register a new IoT device from IoT Core:
     * Navigate to the IoT Core service.
     * From the left pane, click on *Manage > All devices > Things*.

@@ -113,13 +113,15 @@ Modbus supports various types of registers and operations that facilitate divers
       
 5. First, we will create a simple Modbus client and test Client-Server connectivity.
     * Start Node-RED.
-    * Import [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_client.json) into your environment.
+    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_client.json) into your environment.
     * You should now be able to read Controllino Modbus registries in Node RED debug tab as well as update them by clicking on the different provided Inject Nodes.
       ![nodered_modbusclient](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbusclient.png?raw=true)
 
 6. We will now create an HMI using Node-RED dashboard capabilities:
-    * Import [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
+    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
       ![nodered_modbushmi](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmi.png?raw=true)
+    * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your industrial device from this HMI.
+      ![nodered_modbushmiui](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmiui.png?raw=true)
       
 ## PHASE 03: REMOTE MONITORING
 Our industrial plant is now up and running. However, we can only monitor its status or change its operating conditions locally from the HMI at the plant. In order to enable remote communication with the industrial plant, we will set-up an Edge Gatway capable of sending and receiving data to and from our Cloud IoT Platform.
@@ -170,30 +172,6 @@ In order for any IoT device to interact with AWS IoT Platform, it needs to be re
 
 ### 03.2.A: NODE-RED EDGE GATEWAY
 
-
-
-
-
-Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
-
-![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_tables.png?raw=true)
-
-**REQUIREMENTS**
-
-**Hardware:**
-* Previously used HW.
-* Ethernet cable.
-
-**Software:**
-* Previously used SW.
-* Node RED
-
-**STEP BY STEP**
-1. Our Controllino will act as the Modbus Server. In order to prepare the Controllino for Modbus communication:
-    * Install [Arduino Modbus library](https://www.arduino.cc/reference/en/libraries/arduinomodbus/) in your Arduino IDE (1.0.9 used).
-    * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_modbus.ino) sketch code into Arduino IDE.
-    * Upload the code into the Controllino board.
       
-    * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your industrial device from this HMI.
-      ![nodered_modbushmiui](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmiui.png?raw=true)
+    
       

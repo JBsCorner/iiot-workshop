@@ -86,7 +86,7 @@ Modbus supports various types of registers and operations that facilitate divers
 
 **Software:**
 * Previously used SW.
-* Node RED
+* Node RED.
 
 **STEP BY STEP**
 1. Our Controllino will act as the Modbus Server. In order to prepare the Controllino for Modbus communication:
@@ -136,7 +136,7 @@ Most cloud service providers, such as AWS, enable MQTT endpoints in order to con
 
 ### 03.1: DEVICE REGISTRATION
 
-In order for any IoT device to interact with AWS IoT Platform, it needs to be registered and credentials provided.
+To enable an IoT device to communicate with the AWS IoT Platform, it must undergo a registration process.
 
 **REQUIREMENTS**
 
@@ -179,6 +179,21 @@ In order for any IoT device to interact with AWS IoT Platform, it needs to be re
 
 ### 03.2.A: NODE-RED EDGE GATEWAY
 
+We will create a new Node-Red flow to represent the industrial Edge Gateway.
+
+**REQUIREMENTS**
+
+**Hardware:**
+* Previously used HW.
+
+**Software:**
+* Previously used SW.
+
+**STEP BY STEP**
+1. Create a new Node-Red flow for the Edge Gateway.
+2. Using MQTT Node-Red nodes and previously downloaded certificates create a new flow that connects through Modbus to the PLC and sends received measurements to AWS IoT Core.
+3. AWS IoT Core endpoint can be found on the left pane under *Settings*.
+4. AWS offers a MQTT web client for testing purposes under *Test > MQTT Test Client*.
       
     
       

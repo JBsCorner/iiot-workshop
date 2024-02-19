@@ -121,6 +121,45 @@ Modbus supports various types of registers and operations that facilitate divers
     * Import [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
       ![nodered_modbushmi](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmi.png?raw=true)
       
+## PHASE 03: REMOTE MONITORING
+Our industrial plant is now up and running. However, we can only monitor its status or change its operating conditions locally from the HMI at the plant. In order to enable remote communication with the industrial plant, we will set-up an Edge Gatway capable of sending and receiving data to and from our Cloud IoT Platform.
+
+In our case, we will use AWS (Amazon Web Services) Cloud Platform to build our IoT and Data Platforms. AWS is a cloud computing platform provided by Amazon that includes a mixture of infrastructure as a service (IaaS), platform as a service (PaaS), and packaged software as a service (SaaS) offerings. AWS offers over 200 fully featured services from data centers globally. AWS services include computing power, storage options, networking, and databases, designed to help businesses scale and grow by enabling applications to be more resilient, flexible, and scalable.
+
+![aws_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/aws_logo.png?raw=true)
+
+Most cloud service providers, such as AWS, enable MQTT endpoints in order to connect cloud services and IoT devices. MQTT (Message Queuing Telemetry Transport) is a lightweight, publish-subscribe network protocol that transports messages between devices. Designed for the constrained environments of IoT, MQTT is ideal for connecting remote devices with a minimal network footprint, ensuring efficient and reliable communication even under limited bandwidth or high-latency conditions. It operates on top of TCP/IP and is known for its simplicity, ease of implementation, and low power usage, making it well-suited for a wide range of IoT applications, from home automation to industrial monitoring. MQTT enables devices to publish messages to a topic on a broker and allows other devices to subscribe to that topic to receive the messages, facilitating real-time, machine-to-machine communication. With its robust support for secure messaging, MQTT is a key enabler of IoT ecosystems, providing a dependable method for connecting sensors, actuators, and other IoT devices to applications and middleware.
+
+![mqtt_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/mqtt_logo.png?raw=true)
+
+
+
+### 03.A: NODE-RED EDGE GATEWAY
+
+Modbus TCP is a widely used communication protocol that enables the exchange of data between devices in industrial networks. It is an extension of the Modbus protocol, adapted for use over TCP/IP networks, which allows for the seamless integration of industrial devices with the infrastructure of the Internet. Essentially, Modbus TCP facilitates communication between a server, such as a PLC (Programmable Logic Controller) or an industrial computer, and one or more client devices. It operates on a client-server model, where the client initiates requests for data, and the server responds with the requested information. This protocol is highly regarded for its simplicity, reliability and ease of implementation.
+
+![modbus_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_logo.png?raw=true)
+
+Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
+
+![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_tables.png?raw=true)
+
+**REQUIREMENTS**
+
+**Hardware:**
+* Previously used HW.
+* Ethernet cable.
+
+**Software:**
+* Previously used SW.
+* Node RED
+
+**STEP BY STEP**
+1. Our Controllino will act as the Modbus Server. In order to prepare the Controllino for Modbus communication:
+    * Install [Arduino Modbus library](https://www.arduino.cc/reference/en/libraries/arduinomodbus/) in your Arduino IDE (1.0.9 used).
+    * Copy [this](https://github.com/JBsCorner/iiot-workshop/blob/main/code/controllino/controllino_modbus.ino) sketch code into Arduino IDE.
+    * Upload the code into the Controllino board.
+      
     * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your industrial device from this HMI.
       ![nodered_modbushmiui](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmiui.png?raw=true)
       

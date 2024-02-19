@@ -165,10 +165,14 @@ In order for any IoT device to interact with AWS IoT Platform, it needs to be re
     * You must replace the literals *region* and *account-id* in each ARN with those corresponding to your account.
     * Click *Next* without any further configuration to finalize your IoT Policy creation.
     * Your newly created policy will appear under *Security > Policies*.
-4. To 
-
-
-
+4. Lastly, we must provide a mechanism for the device to identify itself when connecting to the platform. We will do this by creating a unique certificate that we will assign to the device.
+    * From the left pane, click on *Security > Certificates*.
+    * Now, click on *Add Certificate > Create Certificate*.
+    * Select *Auto-generate new certificate* and *Active* as the initial status.
+    * Download and save for later both Public and Private keys together with AWS Root CA.
+    * Your newly created certificate will appear under *Security > Certificates*.
+    * Select your certificate, *Actions > Attach Policy* to link your previously created policy to your certificate.
+    * Select again your certificate, *Actions > Attach to Things* to link both yout certificate and policy with your device.
 
 ### 03.2.A: NODE-RED EDGE GATEWAY
 

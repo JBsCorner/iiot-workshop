@@ -132,13 +132,33 @@ Most cloud service providers, such as AWS, enable MQTT endpoints in order to con
 
 ![mqtt_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/mqtt_logo.png?raw=true)
 
+### 03.1: DEVICE REGISTRATION
+
+In order for any IoT device to interact with AWS IoT Platform, it needs to be registered and credentials provided.
+
+**REQUIREMENTS**
+
+**Hardware:**
+No HW required.
+
+**Software:**
+* AWS Account.
+
+**STEP BY STEP**
+1. In order to use AWS services, we first need to log into AWS Console:
+    * Your AWS Account ID and user credentials will be provided to you by your instructor.
+    * Navigate to [AWS Home Page](https://aws.amazon.com/) and click on Sign In.
+    * AWS Sing-in page will now load. Select the "IAM user" sign-in option and enter your Account ID and user credentials.
+    * Once in the console, navigate to the IoT Core service.
+2. As its name suggests, IoT Core is the central service of the AWS IoT suite. We can register a new IoT device from IoT Core:
+    * From the left pane, click on *Manage > All devices > Things*.
+    * Now, click on *Create Thing*, select *Create single thing*, and enter the following name for your thing: {your user name}-thing 
+
+### 03.2.A: NODE-RED EDGE GATEWAY
 
 
-### 03.A: NODE-RED EDGE GATEWAY
 
-Modbus TCP is a widely used communication protocol that enables the exchange of data between devices in industrial networks. It is an extension of the Modbus protocol, adapted for use over TCP/IP networks, which allows for the seamless integration of industrial devices with the infrastructure of the Internet. Essentially, Modbus TCP facilitates communication between a server, such as a PLC (Programmable Logic Controller) or an industrial computer, and one or more client devices. It operates on a client-server model, where the client initiates requests for data, and the server responds with the requested information. This protocol is highly regarded for its simplicity, reliability and ease of implementation.
 
-![modbus_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_logo.png?raw=true)
 
 Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
 

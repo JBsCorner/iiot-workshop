@@ -71,7 +71,16 @@ The Controllino is a programmable controller based on the Arduino platform, spec
 #### 01.A.02: FULL PUMP MONITORING
 
 **STEP BY STEP**
-TBD
+* TBD
+  
+### 01.B: VIRTUAL PLC
+
+For those who do not have the necessary hardware, we will proceed to simulate a PLC with all the necessary sensors to monitor the pump. To do this, we will use the Node-RED tool.
+
+Node-RED is an open-source programming tool for wiring together hardware devices, APIs, and online services.. It provides a browser-based editor that makes it easy to wire together flows using the wide range of nodes in the palette that can be deployed to its runtime in a single click. Designed to be lightweight and built on Node.js, Node-RED is ideal for creating Internet of Things (IoT) applications with ease. It enables users to connect devices, services, and APIs with a simple drag-and-drop interface, allowing for complex systems to be developed without the need for traditional programming. Node-RED's visual approach to programming is particularly suited for managing data streams from sensors and actuators, processing and analyzing data in real-time, and integrating various data sources and services into a cohesive system. With its extensive library of nodes and the ability to add custom nodes, Node-RED is a versatile tool that can be adapted to a wide range of IoT projects and workflows.
+
+![nodered_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_logo.png?raw=true)
+
 
 ## PHASE 02: VISUALIZING THE INDUSTRIAL PROCESS
 We have successfully digitized various physical signals from our process. However, it is currently difficult for a human to know the status of the industrial process or to act upon it. Therefore, in this phase, we will establish communication through industrial protocols between our industrial device and an HMI (Human Machine Interface) with the goal of being able to visualize the information and allow basic actions.

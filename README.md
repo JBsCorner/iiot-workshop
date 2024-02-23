@@ -6,7 +6,8 @@ This repository contains a hands-on workshop designed to emulate a complete indu
 TBD
 
 ## ARCHITECTURE BUILDING BLOCKS
-TBD
+
+![architecture_overview](https://github.com/JBsCorner/iiot-workshop/blob/main/images/architecture_overview.jpg?raw=true)
 
 ## PHASE 01: SENSING THE PHYSICAL WORLD
 In this first phase, we will use a temperature sensor to determine the temperature of the process at each moment. For this purpose, in addition to a temperature sensor, we will need a device capable of taking measurements every few seconds and recording them. 

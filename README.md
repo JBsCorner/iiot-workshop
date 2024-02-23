@@ -46,6 +46,8 @@ The Controllino is a programmable controller based on the Arduino platform, spec
 
 **Software:**
 * Arduino IDE (2.2.1 used)
+  
+#### 01.A.01: OUR FIRST SENSOR
 
 **STEP BY STEP**
 1. Download and install Arduino IDE from the official webpage: [https://www.arduino.cc/](https://www.arduino.cc/).
@@ -65,6 +67,11 @@ The Controllino is a programmable controller based on the Arduino platform, spec
     * *Voilà*, now you should be able to see humidity and temperature readings being printed on your serial monitor.
       
    ![controllino_dht11_serial_monitor](https://github.com/JBsCorner/iiot-workshop/blob/main/images/controllino_dht11_serial_monitor.png?raw=true)
+
+#### 01.A.02: FULL PUMP MONITORING
+
+**STEP BY STEP**
+TBD
 
 ## PHASE 02: VISUALIZING THE INDUSTRIAL PROCESS
 We have successfully digitized various physical signals from our process. However, it is currently difficult for a human to know the status of the industrial process or to act upon it. Therefore, in this phase, we will establish communication through industrial protocols between our industrial device and an HMI (Human Machine Interface) with the goal of being able to visualize the information and allow basic actions.

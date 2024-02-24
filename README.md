@@ -180,6 +180,7 @@ In our case, we decide to configure the PLC as indicated below:
 An HMI, or Human-Machine Interface, is a platform that provides the means for users to interact with and control machines, systems, or devices. Typically, HMIs are used in industrial and manufacturing processes, allowing operators to see real-time system data, manipulate control settings, and monitor operational processes through graphical interfaces onsite. These interfaces can range from simple push-button panels to complex touchscreen displays, providing visual representations of industrial tasks with detailed monitoring of machine inputs and outputs. They are widely used across various industries, including automation, manufacturing, and utilities, to enhance user experience and system usability.
 
 ![hmi_rockwell](https://github.com/JBsCorner/iiot-workshop/blob/main/images/hmi_rockwell.jpg?raw=true)
+
 <sub>*Source: Rockwell Automation.*</sub>
 
 **REQUIREMENTS**
@@ -196,17 +197,17 @@ An HMI, or Human-Machine Interface, is a platform that provides the means for us
     * Node.js (used 20.11.0).
     * Node-RED (used 3.1.3).
       
-4. Install the following Node-RED modules:
+2. Install the following Node-RED modules:
     * node-red-contrib-modbus (5.28.0 used).
     * node-red-dashboard (3.3.1 used).
       
-5. First, we will create a simple Modbus client and test Client-Server connectivity.
+3. First, we will create a simple Modbus client and test Client-Server connectivity.
     * Start Node-RED.
-    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/nodered_modbusclient.json) into your environment.
+    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/nodered_modbus_client.json) into your environment. Make sure that the Modbus server's IP address corresponds to the one used in your PLC (either 10.0.0.1 or localhost).
     * You should now be able to read PLC registries in Node RED debug tab as well as update them by clicking on the different provided Inject Nodes.
       ![nodered_modbusclient](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbusclient.png?raw=true)
 
-6. We will now create an HMI using Node-RED dashboard capabilities:
+4. We will now create an HMI using Node-RED dashboard capabilities:
     * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
       ![nodered_modbushmi](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmi.png?raw=true)
     * Open Node-RED UI at http://localhost:1880/ui and your HMI will load. You can check current status and interact with your industrial device from this HMI.

@@ -204,7 +204,7 @@ An HMI, or Human-Machine Interface, is a platform that provides the means for us
 3. First, we will create a simple Modbus client and test Client-Server connectivity.
     * Start Node-RED.
     * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/nodered_modbus_client.json) into your environment. Make sure that the Modbus server's IP address corresponds to the one used in your PLC (either 10.0.0.1 or localhost).
-    * You should now be able to read PLC registries in Node RED debug tab as well as update them by clicking on the different provided Inject Nodes.
+    * You should now be able to read PLC registries in Node-RED debug tab as well as update them by clicking on the different provided Inject Nodes.
       ![nodered_modbusclient](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbusclient.png?raw=true)
 
 4. We will now create an HMI using Node-RED dashboard capabilities:

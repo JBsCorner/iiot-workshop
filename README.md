@@ -164,6 +164,7 @@ In our case, we decide to configure the PLC as indicated below:
 **Software:**
 * Previously used SW.
 
+**STEP BY STEP**
 1. Our Virtual PLC will act as the Modbus Server. In order to prepare the Virtual PLC for Modbus communication, install the following Node-RED modules:
     * node-red-contrib-modbus (5.28.0 used).
       
@@ -176,7 +177,20 @@ In our case, we decide to configure the PLC as indicated below:
 3. In order to test correct connectivity to Modbus TCP Server: from your PC/Laptop, open *cmd* utility and execute a *telnet* command: `telnet 10.0.0.1 502`.
 
 ### 02.02: CONNECTING AN HMI FOR PROCESS VISUALIZATION
-   
+An HMI, or Human-Machine Interface, is a platform that provides the means for users to interact with and control machines, systems, or devices. Typically, HMIs are used in industrial and manufacturing processes, allowing operators to see real-time system data, manipulate control settings, and monitor operational processes through graphical interfaces onsite. These interfaces can range from simple push-button panels to complex touchscreen displays, providing visual representations of industrial tasks with detailed monitoring of machine inputs and outputs. They are widely used across various industries, including automation, manufacturing, and utilities, to enhance user experience and system usability.
+
+![hmi_rockwell](https://github.com/JBsCorner/iiot-workshop/blob/main/images/hmi_rockwell.png?raw=true)
+<sub>*Source: Rockwell Automation.*</sub>
+
+**REQUIREMENTS**
+
+**Hardware:**
+* Previously used HW.
+
+**Software:**
+* Previously used SW.
+* Node-RED
+  
 1. We will use Node-RED to create our Modbus client and HMI. Download and install Node-RED by following the steps indicated on its official website: [https://nodered.org/](https://nodered.org/)
     * npm (used 10.4.0).
     * Node.js (used 20.11.0).

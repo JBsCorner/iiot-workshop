@@ -164,9 +164,20 @@ In our case, we decide to configure the PLC as indicated below:
 **Software:**
 * Previously used SW.
 
+1. Our Virtual PLC will act as the Modbus Server. In order to prepare the Virtual PLC for Modbus communication, install the following Node-RED modules:
+    * node-red-contrib-modbus (5.28.0 used).
+      
+2. We will create the Modbus Virtual PLC in a different flow:
+    * Create a new Node-RED flow for our Modbus Virtual PLC.  
+    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/nodered_modbusvirtualplc.json) into your environment.
+    * You will notice the UI is exactly the same, but a new Modbus Server node is active in our flow tab.
+      ![nodered_modbusvirtualplc](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbusvirtualplc.png?raw=true)
+    
+3. In order to test correct connectivity to Modbus TCP Server: from your PC/Laptop, open *cmd* utility and execute a *telnet* command: `telnet 10.0.0.1 502`.
 
-     
-3. We will use Node-RED to create our Modbus client and HMI. Download and install Node-RED by following the steps indicated on its official website: [https://nodered.org/](https://nodered.org/)
+### 02.02: CONNECTING AN HMI FOR PROCESS VISUALIZATION
+   
+1. We will use Node-RED to create our Modbus client and HMI. Download and install Node-RED by following the steps indicated on its official website: [https://nodered.org/](https://nodered.org/)
     * npm (used 10.4.0).
     * Node.js (used 20.11.0).
     * Node-RED (used 3.1.3).

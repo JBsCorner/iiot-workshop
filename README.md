@@ -125,10 +125,7 @@ In our case, we decide to configure the PLC as indicated below:
 
 ![modbus_plcsetup](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_plcsetup.jpg?raw=true)
 
-### 02.01.A: CONTROLLINO THROUGH MODBUS TCP
-
-  
-
+#### 02.01.A: CONTROLLINO THROUGH MODBUS TCP
 
 **REQUIREMENTS**
 
@@ -138,7 +135,6 @@ In our case, we decide to configure the PLC as indicated below:
 
 **Software:**
 * Previously used SW.
-* Node RED.
 
 **STEP BY STEP**
 1. Our Controllino will act as the Modbus Server. In order to prepare the Controllino for Modbus communication:
@@ -153,6 +149,22 @@ In our case, we decide to configure the PLC as indicated below:
         * Subnet Mask: 255.255.255.0
         * Default Gatewat: 10.0.0.1
    * Last step is OS specific. In Windows, you may find these settings at *Control Panel > Network and Sharing Center > Ethernet > Internet Protocol Version 4 (TCP/IPv4) > Properties*.
+  
+3. In order to test correct connectivity between both devices:
+    * From your PC/Laptop, open *cmd* utility and execute a *ping* command: `ping 10.0.0.1`.
+    * From your PC/Laptop, open *cmd* utility and execute a *telnet* command: `telnet 10.0.0.1 502`.
+  
+#### 02.01.B: VIRTUAL PLC THROUGH MODBUS TCP
+
+**REQUIREMENTS**
+
+**Hardware:**
+* Previously used HW.
+
+**Software:**
+* Previously used SW.
+
+
      
 3. We will use Node-RED to create our Modbus client and HMI. Download and install Node-RED by following the steps indicated on its official website: [https://nodered.org/](https://nodered.org/)
     * npm (used 10.4.0).

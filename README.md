@@ -94,11 +94,15 @@ Node-RED is an open-source programming tool for wiring together hardware devices
     * npm (used 10.4.0).
     * Node.js (used 20.11.0).
     * Node-RED (used 3.1.3).
+      
 2. Install the following Node-RED modules:
     * node-red-dashboard (3.3.1 used).
+      
 3. We will now create the Virtual PLC using Node-RED programming and dashboarding capabilities:
     * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/nodered_virtualplc.json) into your environment.
       ![nodered_virtualplcflow](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_virtualplcflow.png?raw=true)
+    * Open Node-RED UI at http://localhost:1880/ui and your Virtual PLC will load. You can check change sampling interval, activate/deactivate sensors and change simulated measurments limits.
+      ![nodered_virtualplcdashboard](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_virtualplcdashboard.png?raw=true)
   
 ## PHASE 02: VISUALIZING THE INDUSTRIAL PROCESS
 We have successfully digitized various physical signals from our process. However, it is currently difficult for a human to know the status of the industrial process or to act upon it. Therefore, in this phase, we will establish communication through industrial protocols between our industrial device and an HMI (Human Machine Interface) with the goal of being able to visualize the information and allow basic actions.

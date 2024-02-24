@@ -18,8 +18,8 @@
     "once": true,
     "onceDelay": "1",
     "topic": "",
-    "x": 160,
-    "y": 1140,
+    "x": 1040,
+    "y": 420,
     "wires": [
       [
         "4bb490a06e14eb7d"
@@ -31,15 +31,15 @@
     "type": "function",
     "z": "4523396ede696287",
     "name": "Pump Data Generator",
-    "func": "// TEMPERATURE ºC\nconst active_input_temperature = flow.get(\"active_input_temperature\")\nconst active_output_temperature = flow.get(\"active_output_temperature\")\nvar INPUT_TEMPERATURE = 0\nvar OUTPUT_TEMPERATURE = 0\nif (active_input_temperature || active_output_temperature) {\n    const max_temperature = flow.get(\"max_temperature\")\n    const min_temperature = flow.get(\"min_temperature\")\n    INPUT_TEMPERATURE = Math.round((Math.random() * (max_temperature - min_temperature) + min_temperature)*100)\n    if(active_output_temperature){\n        OUTPUT_TEMPERATURE = INPUT_TEMPERATURE + 350\n    }\n    if(!active_input_temperature){\n        INPUT_TEMPERATURE = 0\n    }\n}\nvar msgIT = { 'payload': INPUT_TEMPERATURE / 100}\nvar msgOT = { 'payload': OUTPUT_TEMPERATURE / 100 }\n\n// FLOW RATE m3/h\nconst active_flow_rate = flow.get(\"active_flow_rate\")\nvar FLOW_RATE = 0\nif (active_flow_rate){\n    const max_flow_rate = flow.get(\"max_flow_rate\")\n    const min_flow_rate = flow.get(\"min_flow_rate\")\n    FLOW_RATE = Math.round((Math.random() * (max_flow_rate - min_flow_rate) + min_flow_rate) * 100)\n}\nvar msgFR = { 'payload': FLOW_RATE / 100 }\n\n// PRESSURE bar\nconst active_pressure = flow.get(\"active_pressure\")\nvar PRESSURE = 0\nif (active_pressure) {\n    const max_pressure = flow.get(\"max_pressure\")\n    const min_pressure = flow.get(\"min_pressure\")\n    PRESSURE = Math.round((Math.random() * (max_pressure - min_pressure) + min_pressure) * 10)\n}\nvar msgP = { 'payload': PRESSURE / 10 }\n\n// POWER kW\nconst active_power = flow.get(\"active_power\")\nvar POWER = 0\nif (active_power){\n    const max_power = flow.get(\"max_power\")\n    const min_power = flow.get(\"min_power\")\n    POWER = Math.round((Math.random() * (max_power - min_power) + min_power) * 1000)\n}\nvar msgPW = { 'payload': POWER / 1000 }\n\n// For testing purposes\n// msg = {\n//     'payload':{\n//         'INPUT_TEMPERATURE': INPUT_TEMPERATURE,\n//         'OUTPUT_TEMPERATURE': OUTPUT_TEMPERATURE,\n//         'FLOW_RATE': FLOW_RATE,\n//         'PRESSURE': PRESSURE,\n//         'POWER': POWER\n//     }\n// }\n// return msg;\n\nmsg.payload = {\n    'fc': 16, // function code\n    'unitid': 1,\n    'address': 0,\n    'quantity': 5,\n    'value': [INPUT_TEMPERATURE,OUTPUT_TEMPERATURE,FLOW_RATE,PRESSURE,POWER]\n}\nreturn [msgIT, msgOT, msgFR, msgP, msgPW];\n\n",
+    "func": "// TEMPERATURE ºC\nconst active_input_temperature = flow.get(\"active_input_temperature\")\nconst active_output_temperature = flow.get(\"active_output_temperature\")\nvar INPUT_TEMPERATURE = 0\nvar OUTPUT_TEMPERATURE = 0\nif (active_input_temperature || active_output_temperature) {\n    const max_temperature = flow.get(\"max_temperature\")\n    const min_temperature = flow.get(\"min_temperature\")\n    INPUT_TEMPERATURE = Math.round((Math.random() * (max_temperature - min_temperature) + min_temperature)*100)\n    if(active_output_temperature){\n        OUTPUT_TEMPERATURE = INPUT_TEMPERATURE + 350\n    }\n    if(!active_input_temperature){\n        INPUT_TEMPERATURE = 0\n    }\n}\nvar msgIT = { 'payload': INPUT_TEMPERATURE / 100}\nvar msgOT = { 'payload': OUTPUT_TEMPERATURE / 100 }\n\n// FLOW RATE m3/h\nconst active_flow_rate = flow.get(\"active_flow_rate\")\nvar FLOW_RATE = 0\nif (active_flow_rate){\n    const max_flow_rate = flow.get(\"max_flow_rate\")\n    const min_flow_rate = flow.get(\"min_flow_rate\")\n    FLOW_RATE = Math.round((Math.random() * (max_flow_rate - min_flow_rate) + min_flow_rate) * 100)\n}\nvar msgFR = { 'payload': FLOW_RATE / 100 }\n\n// PRESSURE bar\nconst active_pressure = flow.get(\"active_pressure\")\nvar PRESSURE = 0\nif (active_pressure) {\n    const max_pressure = flow.get(\"max_pressure\")\n    const min_pressure = flow.get(\"min_pressure\")\n    PRESSURE = Math.round((Math.random() * (max_pressure - min_pressure) + min_pressure) * 10)\n}\nvar msgP = { 'payload': PRESSURE / 10 }\n\n// POWER kW\nconst active_power = flow.get(\"active_power\")\nvar POWER = 0\nif (active_power){\n    const max_power = flow.get(\"max_power\")\n    const min_power = flow.get(\"min_power\")\n    POWER = Math.round((Math.random() * (max_power - min_power) + min_power) * 1000)\n}\nvar msgPW = { 'payload': POWER / 1000 }\n\n// For testing purposes\n// msg = {\n//     'payload':{\n//         'INPUT_TEMPERATURE': INPUT_TEMPERATURE,\n//         'OUTPUT_TEMPERATURE': OUTPUT_TEMPERATURE,\n//         'FLOW_RATE': FLOW_RATE,\n//         'PRESSURE': PRESSURE,\n//         'POWER': POWER\n//     }\n// }\n// return msg;\n\nreturn [msgIT, msgOT, msgFR, msgP, msgPW];\n\n",
     "outputs": 5,
     "timeout": 0,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 600,
-    "y": 1140,
+    "x": 1480,
+    "y": 420,
     "wires": [
       [
         "4781c6e1a6469d60"
@@ -131,8 +131,8 @@
     "seg2": "",
     "diff": false,
     "className": "",
-    "x": 890,
-    "y": 1060,
+    "x": 1770,
+    "y": 340,
     "wires": []
   },
   {
@@ -175,7 +175,7 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 900,
+    "x": 840,
     "y": 520,
     "wires": [
       []
@@ -263,8 +263,8 @@
     "seg2": "",
     "diff": false,
     "className": "",
-    "x": 900,
-    "y": 1100,
+    "x": 1780,
+    "y": 380,
     "wires": []
   },
   {
@@ -405,8 +405,8 @@
     "seg2": "",
     "diff": false,
     "className": "",
-    "x": 860,
-    "y": 1140,
+    "x": 1740,
+    "y": 420,
     "wires": []
   },
   {
@@ -433,8 +433,8 @@
     "seg2": "",
     "diff": false,
     "className": "",
-    "x": 860,
-    "y": 1180,
+    "x": 1740,
+    "y": 460,
     "wires": []
   },
   {
@@ -461,8 +461,8 @@
     "seg2": "",
     "diff": false,
     "className": "",
-    "x": 850,
-    "y": 1220,
+    "x": 1730,
+    "y": 500,
     "wires": []
   },
   {
@@ -709,8 +709,8 @@
     "z": "4523396ede696287",
     "name": "Data Generation",
     "info": "",
-    "x": 140,
-    "y": 1040,
+    "x": 1020,
+    "y": 320,
     "wires": []
   },
   {
@@ -730,8 +730,8 @@
     "drop": true,
     "allowrate": true,
     "outputs": 1,
-    "x": 370,
-    "y": 1140,
+    "x": 1250,
+    "y": 420,
     "wires": [
       [
         "1ff2053d92468ffc"
@@ -750,7 +750,7 @@
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 1460,
+    "x": 1600,
     "y": 220,
     "wires": [
       [
@@ -764,7 +764,7 @@
     "z": "4523396ede696287",
     "name": "Sampling Interval",
     "info": "",
-    "x": 880,
+    "x": 1020,
     "y": 60,
     "wires": []
   },
@@ -777,7 +777,7 @@
     "links": [
       "46bdba0bf7b950d7"
     ],
-    "x": 1605,
+    "x": 1745,
     "y": 220,
     "wires": []
   },
@@ -800,7 +800,7 @@
     "max": "10",
     "step": "1",
     "className": "",
-    "x": 1200,
+    "x": 1340,
     "y": 220,
     "wires": [
       [
@@ -816,8 +816,8 @@
     "links": [
       "ecc95eb0a8c177fe"
     ],
-    "x": 215,
-    "y": 1100,
+    "x": 1095,
+    "y": 380,
     "wires": [
       [
         "4bb490a06e14eb7d"
@@ -841,7 +841,7 @@
     "topic": "",
     "payload": "1",
     "payloadType": "num",
-    "x": 940,
+    "x": 1080,
     "y": 120,
     "wires": [
       [
@@ -1171,7 +1171,7 @@
     "name": "Image",
     "tab": "c2674e3cade1c3fe",
     "order": 1,
-    "disp": true,
+    "disp": false,
     "width": "10",
     "collapse": false,
     "className": ""

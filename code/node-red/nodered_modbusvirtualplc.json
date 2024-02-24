@@ -1,0 +1,1607 @@
+[
+  {
+    "id": "bda9e9c987cfb5b6",
+    "type": "tab",
+    "label": "IIOT WKS - PLC MODBUS",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "111fcb127dfd9a17",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Every second",
+    "props": [],
+    "repeat": "1",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "1",
+    "topic": "",
+    "x": 1040,
+    "y": 520,
+    "wires": [
+      [
+        "d4b38ea577df20f7"
+      ]
+    ]
+  },
+  {
+    "id": "fa9445f42c9099bd",
+    "type": "modbus-flex-server",
+    "z": "bda9e9c987cfb5b6",
+    "name": "",
+    "logEnabled": true,
+    "serverAddress": "0.0.0.0",
+    "serverPort": "502",
+    "responseDelay": 100,
+    "unitId": 1,
+    "delayUnit": "ms",
+    "coilsBufferSize": 20000,
+    "registersBufferSize": 20000,
+    "minAddress": 0,
+    "splitAddress": 10000,
+    "funcGetCoil": "function getFlexCoil(addr, unitID) {\n\tif (unitID === node.unitId && \n\t\taddr >= node.minAddress && \n\t\taddr <= node.splitAddress) { \n\n\t\treturn node.coils.readUInt8(addr * node.bufferFactor) \n\t}  \n}",
+    "funcGetDiscreteInput": "function getFlexDiscreteInput(addr, unitID) {\n\taddr += node.splitAddress\n\tif (unitID === node.unitId && \n\t\taddr >= node.splitAddress && \n\t\taddr <= node.splitAddress * 2) { \n\n\t\treturn node.coils.readUInt8(addr * node.bufferFactor) \n\t}  \n}",
+    "funcGetInputRegister": "function getFlexInputRegister(addr, unitID) { \n\tif (unitID === node.unitId && \n\t\taddr >= node.minAddress && \n\t\taddr <= node.splitAddress) { \n\n\t\treturn node.registers.readUInt16BE(addr * node.bufferFactor)  \n\t} \n}",
+    "funcGetHoldingRegister": "function getFlexHoldingRegsiter(addr, unitID) { \n\taddr += node.splitAddress\n\tif (unitID === node.unitId && \n\t\taddr >= node.splitAddress && \n\t\taddr <= node.splitAddress * 2) { \n\n\t\treturn node.registers.readUInt16BE(addr * node.bufferFactor)  \n\t} \n}",
+    "funcSetCoil": "function setFlexCoil(addr, value, unitID) { \n\tif (unitID === node.unitId && \n\t\taddr >= node.minAddress && \n\t\taddr <= node.splitAddress) { \n\n\t\tnode.coils.writeUInt8(value, addr * node.bufferFactor)  \n\t} \n}",
+    "funcSetRegister": "function setFlexRegister(addr, value, unitID) { \n\taddr += node.splitAddress\n\tif (unitID === node.unitId && \n\t\taddr >= node.splitAddress && \n\t\taddr <= node.splitAddress * 2) { \n\n\t\tnode.registers.writeUInt16BE(value, addr * node.bufferFactor)\n\t} \n}",
+    "showErrors": false,
+    "x": 1380,
+    "y": 720,
+    "wires": [
+      [
+        "46de9b52b64ad19e"
+      ],
+      [
+        "1e7c0798ab10f230"
+      ],
+      [],
+      [],
+      []
+    ]
+  },
+  {
+    "id": "12f92c84b17eb0cb",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Pump Data Generator",
+    "func": "var values = []\n\n// TEMPERATURE ºC\nconst active_input_temperature = flow.get(\"active_input_temperature\")\nconst active_output_temperature = flow.get(\"active_output_temperature\")\nvar INPUT_TEMPERATURE = 0\nvar OUTPUT_TEMPERATURE = 0\nif (active_input_temperature || active_output_temperature) {\n    const max_temperature = flow.get(\"max_temperature\")\n    const min_temperature = flow.get(\"min_temperature\")\n    INPUT_TEMPERATURE = Math.round((Math.random() * (max_temperature - min_temperature) + min_temperature)*100)\n    if(active_output_temperature){\n        OUTPUT_TEMPERATURE = INPUT_TEMPERATURE + 350\n    }\n    if(!active_input_temperature){\n        INPUT_TEMPERATURE = 0\n    }\n}\nvar msgIT = { 'payload': INPUT_TEMPERATURE / 100}\nvar msgOT = { 'payload': OUTPUT_TEMPERATURE / 100 }\nvalues.push(INPUT_TEMPERATURE)\nvalues.push(OUTPUT_TEMPERATURE)\n\n// FLOW RATE m3/h\nconst active_flow_rate = flow.get(\"active_flow_rate\")\nvar FLOW_RATE = 0\nif (active_flow_rate){\n    const max_flow_rate = flow.get(\"max_flow_rate\")\n    const min_flow_rate = flow.get(\"min_flow_rate\")\n    FLOW_RATE = Math.round((Math.random() * (max_flow_rate - min_flow_rate) + min_flow_rate) * 100)\n}\nvar msgFR = { 'payload': FLOW_RATE / 100 }\nvalues.push(FLOW_RATE)\n\n// PRESSURE bar\nconst active_pressure = flow.get(\"active_pressure\")\nvar PRESSURE = 0\nif (active_pressure) {\n    const max_pressure = flow.get(\"max_pressure\")\n    const min_pressure = flow.get(\"min_pressure\")\n    PRESSURE = Math.round((Math.random() * (max_pressure - min_pressure) + min_pressure) * 10)\n}\nvar msgP = { 'payload': PRESSURE / 10 }\nvalues.push(PRESSURE)\n\n// POWER kW\nconst active_power = flow.get(\"active_power\")\nvar POWER = 0\nif (active_power){\n    const max_power = flow.get(\"max_power\")\n    const min_power = flow.get(\"min_power\")\n    POWER = Math.round((Math.random() * (max_power - min_power) + min_power) * 1000)\n}\nvar msgPW = { 'payload': POWER / 1000 }\nvalues.push(POWER)\n\n// For testing purposes\n// msg = {\n//     'payload':{\n//         'INPUT_TEMPERATURE': INPUT_TEMPERATURE,\n//         'OUTPUT_TEMPERATURE': OUTPUT_TEMPERATURE,\n//         'FLOW_RATE': FLOW_RATE,\n//         'PRESSURE': PRESSURE,\n//         'POWER': POWER\n//     }\n// }\n// return msg;\n\n// Messages to update Modbus Server\nvar msgMB = []\nvar modbusAddress = 10\nvalues.forEach((item, index) => {\n    msgMB.push({\n        \"payload\": {\n            \"value\": item,\n            \"register\": \"input\",\n            \"address\": modbusAddress + index,\n            \"disableMsgOutput\": 1\n        }\n    })\n})\n\n// msg.payload = {\n//     'fc': 16, // function code\n//     'unitid': 1,\n//     'address': 10,\n//     'quantity': 5,\n//     'value': [INPUT_TEMPERATURE, OUTPUT_TEMPERATURE, FLOW_RATE, PRESSURE, POWER]\n// }\nreturn [msgIT, msgOT, msgFR, msgP, msgPW, msgMB];",
+    "outputs": 6,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1480,
+    "y": 520,
+    "wires": [
+      [
+        "3533b023e759cace"
+      ],
+      [
+        "8b5e2beddbbb03e1"
+      ],
+      [
+        "a536c29fe7097e9a"
+      ],
+      [
+        "8872686405910a0a"
+      ],
+      [
+        "377b4ed40967b84a"
+      ],
+      [
+        "52887220e852da21"
+      ]
+    ]
+  },
+  {
+    "id": "ae0b4d84ce477f2e",
+    "type": "ui_template",
+    "z": "bda9e9c987cfb5b6",
+    "group": "fcda4a81adf04083",
+    "name": "PLC Image",
+    "order": 8,
+    "width": "0",
+    "height": "0",
+    "format": "<div>\n    <img src=\"https://github.com/JBsCorner/iiot-workshop/blob/main/images/controllino_maxi.png?raw=true\" alt=\"Girl in a jacket\" width=\"500\" height=\"600\">\n</div>",
+    "storeOutMessages": true,
+    "fwdInMessages": true,
+    "resendOnRefresh": false,
+    "templateScope": "local",
+    "className": "",
+    "x": 130,
+    "y": 100,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "91cf98c5660f539f",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Min. Temperature",
+    "label": "Min. Temperature",
+    "tooltip": "",
+    "group": "333142a05455ce24",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}ºC",
+    "min": "30",
+    "max": "45",
+    "step": "5",
+    "className": "",
+    "x": 430,
+    "y": 160,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "3533b023e759cace",
+    "type": "ui_gauge",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Input Temperature",
+    "group": "333142a05455ce24",
+    "order": 4,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "Input Temperature",
+    "label": "ºC",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "80",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1770,
+    "y": 420,
+    "wires": []
+  },
+  {
+    "id": "3e023fca11a31af5",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Max. Temperature",
+    "label": "Max. Temperature",
+    "tooltip": "",
+    "group": "333142a05455ce24",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}ºC",
+    "min": "50",
+    "max": "70",
+    "step": "5",
+    "className": "",
+    "x": 430,
+    "y": 220,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "ec9411c9523a2acc",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Set Limits",
+    "func": "flow.set(msg.topic, msg.payload);\n\n\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 780,
+    "y": 360,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "b908fab08ae186e9",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Temperature Initial Low Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "min_temperature",
+    "payload": "30",
+    "payloadType": "num",
+    "x": 180,
+    "y": 160,
+    "wires": [
+      [
+        "91cf98c5660f539f"
+      ]
+    ]
+  },
+  {
+    "id": "5bf3e934f3d188bd",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Temperature Initial High Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "max_temperature",
+    "payload": "50",
+    "payloadType": "num",
+    "x": 180,
+    "y": 220,
+    "wires": [
+      [
+        "3e023fca11a31af5"
+      ]
+    ]
+  },
+  {
+    "id": "8b5e2beddbbb03e1",
+    "type": "ui_gauge",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Output Temperature",
+    "group": "333142a05455ce24",
+    "order": 6,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "Output Temperature",
+    "label": "ºC",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "80",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1780,
+    "y": 460,
+    "wires": []
+  },
+  {
+    "id": "0e82a36c65e3c54c",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Min. Flow Rate",
+    "label": "Min. Flow Rate",
+    "tooltip": "",
+    "group": "26c1d4a10040f9e0",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}ºC",
+    "min": "30",
+    "max": "195",
+    "step": "10",
+    "className": "",
+    "x": 420,
+    "y": 280,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "a50f7e128a782619",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Max. Flow Rate",
+    "label": "Max. Flow Rate",
+    "tooltip": "",
+    "group": "26c1d4a10040f9e0",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}ºC",
+    "min": "200",
+    "max": "240",
+    "step": "10",
+    "className": "",
+    "x": 420,
+    "y": 340,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "20f503583805c56b",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Flow Rate Initial Low Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "min_flow_rate",
+    "payload": "180",
+    "payloadType": "num",
+    "x": 180,
+    "y": 280,
+    "wires": [
+      [
+        "0e82a36c65e3c54c"
+      ]
+    ]
+  },
+  {
+    "id": "960e9b6df301c3e1",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Flow Rate Initial High Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "max_flow_rate",
+    "payload": "240",
+    "payloadType": "num",
+    "x": 180,
+    "y": 340,
+    "wires": [
+      [
+        "a50f7e128a782619"
+      ]
+    ]
+  },
+  {
+    "id": "a536c29fe7097e9a",
+    "type": "ui_gauge",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Flow Rate",
+    "group": "26c1d4a10040f9e0",
+    "order": 4,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "",
+    "label": "ºC",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "240",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1740,
+    "y": 500,
+    "wires": []
+  },
+  {
+    "id": "8872686405910a0a",
+    "type": "ui_gauge",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Pressure",
+    "group": "67ebef44eb41042f",
+    "order": 4,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "",
+    "label": "bar",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "10",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1740,
+    "y": 540,
+    "wires": []
+  },
+  {
+    "id": "377b4ed40967b84a",
+    "type": "ui_gauge",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Power",
+    "group": "ecf9bb7f4ec17f4f",
+    "order": 4,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "",
+    "label": "kW",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "1",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1730,
+    "y": 580,
+    "wires": []
+  },
+  {
+    "id": "15b058680711895a",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Min. Pressure",
+    "label": "Min. Pressure",
+    "tooltip": "",
+    "group": "67ebef44eb41042f",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}bar",
+    "min": "0",
+    "max": "6",
+    "step": "1",
+    "className": "",
+    "x": 420,
+    "y": 400,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "78420ac9caf8291d",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Max. Pressure",
+    "label": "Max. Pressure",
+    "tooltip": "",
+    "group": "67ebef44eb41042f",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}bar",
+    "min": "7",
+    "max": "10",
+    "step": "1",
+    "className": "",
+    "x": 420,
+    "y": 460,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "cc7fd9126aa18d25",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Pressure Initial Low Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "min_pressure",
+    "payload": "3",
+    "payloadType": "num",
+    "x": 170,
+    "y": 400,
+    "wires": [
+      [
+        "15b058680711895a"
+      ]
+    ]
+  },
+  {
+    "id": "2b9a9f47074aa206",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Pressure Initial High Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "max_pressure",
+    "payload": "10",
+    "payloadType": "num",
+    "x": 170,
+    "y": 460,
+    "wires": [
+      [
+        "78420ac9caf8291d"
+      ]
+    ]
+  },
+  {
+    "id": "79b94646ab6965d2",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Min. Power",
+    "label": "Min. Power",
+    "tooltip": "",
+    "group": "ecf9bb7f4ec17f4f",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}kW",
+    "min": "0",
+    "max": "0.5",
+    "step": "0.1",
+    "className": "",
+    "x": 410,
+    "y": 520,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "c5652038c03b357c",
+    "type": "ui_numeric",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Max. Power",
+    "label": "Max. Power",
+    "tooltip": "",
+    "group": "ecf9bb7f4ec17f4f",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "wrap": false,
+    "passthru": true,
+    "topic": "topic",
+    "topicType": "msg",
+    "format": "{{value}}kW",
+    "min": "0.6",
+    "max": "1",
+    "step": "0.1",
+    "className": "",
+    "x": 410,
+    "y": 580,
+    "wires": [
+      [
+        "ec9411c9523a2acc"
+      ]
+    ]
+  },
+  {
+    "id": "356f2d6dee0164bb",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Power Initial Low Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "min_power",
+    "payload": "0.5",
+    "payloadType": "num",
+    "x": 160,
+    "y": 520,
+    "wires": [
+      [
+        "79b94646ab6965d2"
+      ]
+    ]
+  },
+  {
+    "id": "62725674c3d0d6f9",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Power Initial High Limit",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "max_power",
+    "payload": "0.9",
+    "payloadType": "num",
+    "x": 170,
+    "y": 580,
+    "wires": [
+      [
+        "c5652038c03b357c"
+      ]
+    ]
+  },
+  {
+    "id": "039540a6a329501a",
+    "type": "comment",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Measurment Simulation Config",
+    "info": "",
+    "x": 170,
+    "y": 40,
+    "wires": []
+  },
+  {
+    "id": "ef21ad558cb721b1",
+    "type": "comment",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Data Generation",
+    "info": "",
+    "x": 1020,
+    "y": 400,
+    "wires": []
+  },
+  {
+    "id": "dae3a89e9fbb7398",
+    "type": "comment",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Modbus Server",
+    "info": "",
+    "x": 1020,
+    "y": 640,
+    "wires": []
+  },
+  {
+    "id": "d4b38ea577df20f7",
+    "type": "delay",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sampling Interval",
+    "pauseType": "rate",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "1",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": true,
+    "allowrate": true,
+    "outputs": 1,
+    "x": 1250,
+    "y": 520,
+    "wires": [
+      [
+        "12f92c84b17eb0cb"
+      ]
+    ]
+  },
+  {
+    "id": "7eb57712d5ad907e",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Set Sampling Interval",
+    "func": "var buffer = msg.payload // Buffer from Modbus Server UInt8Array\nvar modbusAddress = 20 // Holding register assigned to Sampling Interval\n\n// Convert UInt8Array to number, each memory register takes 8 buffer spaces\nlet updateInterval = (buffer[modbusAddress * 8] << 8) + buffer[modbusAddress * 8 + 1]\n\n// Dashboard Update\nvar msg1 ={\n    \"payload\": updateInterval / 1000,\n    \"disableWrite\": true\n}\n\n// Delay Node Update\nvar msg2 ={\n    \"rate\": updateInterval\n}\n\nreturn [msg1,msg2];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1100,
+    "y": 240,
+    "wires": [
+      [
+        "886304b37c3f55c1"
+      ],
+      [
+        "36d6356054851c29"
+      ]
+    ]
+  },
+  {
+    "id": "56b115c67001cd27",
+    "type": "comment",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sampling Interval",
+    "info": "",
+    "x": 1020,
+    "y": 40,
+    "wires": []
+  },
+  {
+    "id": "886304b37c3f55c1",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sampling Interval Dashboard",
+    "mode": "link",
+    "links": [
+      "8a2fd9b34282f491"
+    ],
+    "x": 1395,
+    "y": 220,
+    "wires": []
+  },
+  {
+    "id": "36d6356054851c29",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sampling Interval Delay",
+    "mode": "link",
+    "links": [
+      "1043ad885e79d1b1"
+    ],
+    "x": 1395,
+    "y": 260,
+    "wires": []
+  },
+  {
+    "id": "03ac0f908a126e5c",
+    "type": "ui_slider",
+    "z": "bda9e9c987cfb5b6",
+    "name": "",
+    "label": "Sampling Interval [s]",
+    "tooltip": "",
+    "group": "fcda4a81adf04083",
+    "order": 0,
+    "width": "0",
+    "height": "0",
+    "passthru": true,
+    "outs": "end",
+    "topic": "topic",
+    "topicType": "msg",
+    "min": "1",
+    "max": "10",
+    "step": "1",
+    "className": "",
+    "x": 1340,
+    "y": 140,
+    "wires": [
+      [
+        "ea8039347b84a157"
+      ]
+    ]
+  },
+  {
+    "id": "ea8039347b84a157",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Write Holding",
+    "func": "if (msg.disableWrite) {\n    return null;\n} else {\n    var updateInterval = msg.payload * 1000;\n    var modbusAddress = 20\n    msg.payload = {\n        \"value\": updateInterval,\n        \"register\": \"holding\",\n        \"address\": modbusAddress,\n        \"disableMsgOutput\": 1\n    }\n    return msg\n}\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1560,
+    "y": 140,
+    "wires": [
+      [
+        "4cdc2342a8574645"
+      ]
+    ]
+  },
+  {
+    "id": "8a2fd9b34282f491",
+    "type": "link in",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Update Interval Dashboard",
+    "links": [
+      "886304b37c3f55c1",
+      "a49225af4d01d560"
+    ],
+    "x": 955,
+    "y": 160,
+    "wires": [
+      [
+        "03ac0f908a126e5c"
+      ]
+    ]
+  },
+  {
+    "id": "1043ad885e79d1b1",
+    "type": "link in",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sampling Interval Delay",
+    "links": [
+      "36d6356054851c29",
+      "b37e84a99d34ad6e",
+      "d3e30c58ac3f37ea",
+      "ad8f4b91edd50fcf"
+    ],
+    "x": 1095,
+    "y": 480,
+    "wires": [
+      [
+        "d4b38ea577df20f7"
+      ]
+    ]
+  },
+  {
+    "id": "c007fd3b3f138883",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Initialize Sampling Interval",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "2",
+    "topic": "",
+    "payload": "1",
+    "payloadType": "num",
+    "x": 1080,
+    "y": 100,
+    "wires": [
+      [
+        "03ac0f908a126e5c"
+      ]
+    ]
+  },
+  {
+    "id": "23e2db4e62037c8b",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "In Temperature Initial Activate",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "active_input_temperature",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 170,
+    "y": 720,
+    "wires": [
+      [
+        "ac4b5a2696e8f1e9"
+      ]
+    ]
+  },
+  {
+    "id": "ac4b5a2696e8f1e9",
+    "type": "ui_switch",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Activate Input Temperature",
+    "label": "Active",
+    "tooltip": "",
+    "group": "333142a05455ce24",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 540,
+    "y": 720,
+    "wires": [
+      [
+        "90584d9924a4b0b0",
+        "b2778def044dbb4b"
+      ]
+    ]
+  },
+  {
+    "id": "04acc8d310ecef0f",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Out Temperature Initial Activate",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "active_output_temperature",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 170,
+    "y": 780,
+    "wires": [
+      [
+        "f35056e3c7939716"
+      ]
+    ]
+  },
+  {
+    "id": "f35056e3c7939716",
+    "type": "ui_switch",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Activate Output Temperature",
+    "label": "Active",
+    "tooltip": "",
+    "group": "333142a05455ce24",
+    "order": 5,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 540,
+    "y": 780,
+    "wires": [
+      [
+        "90584d9924a4b0b0",
+        "b2778def044dbb4b"
+      ]
+    ]
+  },
+  {
+    "id": "63f65101023c779d",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Flow Rate Initial Activate",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "active_flow_rate",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 150,
+    "y": 840,
+    "wires": [
+      [
+        "a5ea59766239680e"
+      ]
+    ]
+  },
+  {
+    "id": "a5ea59766239680e",
+    "type": "ui_switch",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Activate Flow Rate",
+    "label": "Active",
+    "tooltip": "",
+    "group": "26c1d4a10040f9e0",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 510,
+    "y": 840,
+    "wires": [
+      [
+        "90584d9924a4b0b0",
+        "b2778def044dbb4b"
+      ]
+    ]
+  },
+  {
+    "id": "fbd31634b05bba7a",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Pressure Initial Activate",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "active_pressure",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 150,
+    "y": 900,
+    "wires": [
+      [
+        "8d68e5663b807768"
+      ]
+    ]
+  },
+  {
+    "id": "8d68e5663b807768",
+    "type": "ui_switch",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Activate Pressure",
+    "label": "Active",
+    "tooltip": "",
+    "group": "67ebef44eb41042f",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 510,
+    "y": 900,
+    "wires": [
+      [
+        "90584d9924a4b0b0",
+        "b2778def044dbb4b"
+      ]
+    ]
+  },
+  {
+    "id": "ee6003fe75bc6a41",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Power Initial Activate",
+    "props": [
+      {
+        "p": "payload"
+      },
+      {
+        "p": "topic",
+        "vt": "str"
+      }
+    ],
+    "repeat": "",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "active_power",
+    "payload": "true",
+    "payloadType": "bool",
+    "x": 140,
+    "y": 960,
+    "wires": [
+      [
+        "fab8954d103bdd78"
+      ]
+    ]
+  },
+  {
+    "id": "fab8954d103bdd78",
+    "type": "ui_switch",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Activate Power",
+    "label": "Active",
+    "tooltip": "",
+    "group": "ecf9bb7f4ec17f4f",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 500,
+    "y": 960,
+    "wires": [
+      [
+        "90584d9924a4b0b0",
+        "b2778def044dbb4b"
+      ]
+    ]
+  },
+  {
+    "id": "52887220e852da21",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Input Registers Sensor Values",
+    "mode": "link",
+    "links": [
+      "1e36f689cef4a53f"
+    ],
+    "x": 1695,
+    "y": 620,
+    "wires": []
+  },
+  {
+    "id": "1e36f689cef4a53f",
+    "type": "link in",
+    "z": "bda9e9c987cfb5b6",
+    "name": "ModbusServer",
+    "links": [
+      "52887220e852da21",
+      "4cdc2342a8574645",
+      "b39ba708913e6a0f",
+      "c0b788e6b3d6cebe",
+      "c3b32d42db508f73"
+    ],
+    "x": 955,
+    "y": 680,
+    "wires": [
+      [
+        "fa9445f42c9099bd"
+      ]
+    ]
+  },
+  {
+    "id": "09b15969e4be328a",
+    "type": "inject",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Check for updates every second",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "1",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 1080,
+    "y": 780,
+    "wires": [
+      [
+        "fa9445f42c9099bd"
+      ]
+    ]
+  },
+  {
+    "id": "4cdc2342a8574645",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Holding Sampling Interval",
+    "mode": "link",
+    "links": [
+      "1e36f689cef4a53f"
+    ],
+    "x": 1705,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "46de9b52b64ad19e",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Modbus Server Holding",
+    "mode": "link",
+    "links": [
+      "2e11c77ffdbc78d8"
+    ],
+    "x": 1575,
+    "y": 680,
+    "wires": []
+  },
+  {
+    "id": "2e11c77ffdbc78d8",
+    "type": "link in",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sampling Interval",
+    "links": [
+      "46de9b52b64ad19e"
+    ],
+    "x": 955,
+    "y": 240,
+    "wires": [
+      [
+        "7eb57712d5ad907e"
+      ]
+    ]
+  },
+  {
+    "id": "e9925efbc2e00a2f",
+    "type": "comment",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sensor Activation",
+    "info": "",
+    "x": 120,
+    "y": 660,
+    "wires": []
+  },
+  {
+    "id": "90584d9924a4b0b0",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Write Coil",
+    "func": "if(msg.disableWrite){\n    return null;\n}else{\n    var modbusAddresses = {\n        \"active_input_temperature\": 0,\n        \"active_output_temperature\": 1,\n        \"active_flow_rate\": 2,\n        \"active_pressure\": 3,\n        \"active_power\": 4\n    }\n    msg.payload = {\n        \"value\": +msg.payload,\n        \"register\": \"coils\",\n        \"address\": modbusAddresses[msg.topic],\n        \"disableMsgOutput\": 1\n    }\n    return msg\n}\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 780,
+    "y": 860,
+    "wires": [
+      [
+        "c3b32d42db508f73"
+      ]
+    ]
+  },
+  {
+    "id": "c3b32d42db508f73",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Coil Sensor Activation",
+    "mode": "link",
+    "links": [
+      "1e36f689cef4a53f"
+    ],
+    "x": 875,
+    "y": 860,
+    "wires": []
+  },
+  {
+    "id": "1e7c0798ab10f230",
+    "type": "link out",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Modbus Server Coils",
+    "mode": "link",
+    "links": [
+      "b424229365ad1ea9"
+    ],
+    "x": 1575,
+    "y": 720,
+    "wires": []
+  },
+  {
+    "id": "b424229365ad1ea9",
+    "type": "link in",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Sensor Activation",
+    "links": [
+      "1e7c0798ab10f230"
+    ],
+    "x": 55,
+    "y": 1120,
+    "wires": [
+      [
+        "83e5397dd8e8d25c"
+      ]
+    ]
+  },
+  {
+    "id": "83e5397dd8e8d25c",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Set Sensor Activation",
+    "func": "var buffer = msg.payload // Buffer from Modbus Server UInt8Array\nvar modbusAddresses = {\n    \"active_input_temperature\": 0,\n    \"active_output_temperature\": 1,\n    \"active_flow_rate\": 2,\n    \"active_pressure\": 3,\n    \"active_power\": 4\n}\n\nvar msgs = []\nfor (let key in modbusAddresses ){\n    let modbusAddress = modbusAddresses[key]\n    // Convert UInt8Array to number, each memory register takes 8 buffer spaces\n    let value = (buffer[modbusAddress * 8] << 8) + buffer[modbusAddress * 8 + 1]\n    let msg = {\n        \"payload\": Boolean(value),\n        \"topic\": key,\n        \"disableWrite\": true\n    }\n    msgs.push(msg)\n}\n\nreturn [msgs];",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 200,
+    "y": 1120,
+    "wires": [
+      [
+        "5e1c8d7d0aeb2baf"
+      ]
+    ]
+  },
+  {
+    "id": "5e1c8d7d0aeb2baf",
+    "type": "switch",
+    "z": "bda9e9c987cfb5b6",
+    "name": "",
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "active_input_temperature",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_output_temperature",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_flow_rate",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_pressure",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_power",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 5,
+    "x": 290,
+    "y": 1040,
+    "wires": [
+      [
+        "ac4b5a2696e8f1e9"
+      ],
+      [
+        "f35056e3c7939716"
+      ],
+      [
+        "a5ea59766239680e"
+      ],
+      [
+        "8d68e5663b807768"
+      ],
+      [
+        "fab8954d103bdd78"
+      ]
+    ]
+  },
+  {
+    "id": "b2778def044dbb4b",
+    "type": "function",
+    "z": "bda9e9c987cfb5b6",
+    "name": "Set Activation",
+    "func": "flow.set(msg.topic, msg.payload);",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 800,
+    "y": 920,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "fcda4a81adf04083",
+    "type": "ui_group",
+    "name": "Image",
+    "tab": "c40344b0.c82658",
+    "order": 1,
+    "disp": false,
+    "width": "10",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "333142a05455ce24",
+    "type": "ui_group",
+    "name": "TEMPERATURE",
+    "tab": "c40344b0.c82658",
+    "order": 2,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "26c1d4a10040f9e0",
+    "type": "ui_group",
+    "name": "FLOW RATE",
+    "tab": "c40344b0.c82658",
+    "order": 5,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "67ebef44eb41042f",
+    "type": "ui_group",
+    "name": "PRESSURE",
+    "tab": "c40344b0.c82658",
+    "order": 3,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "ecf9bb7f4ec17f4f",
+    "type": "ui_group",
+    "name": "POWER",
+    "tab": "c40344b0.c82658",
+    "order": 4,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "c40344b0.c82658",
+    "type": "ui_tab",
+    "name": "PLC MODBUS",
+    "icon": "dashboard",
+    "disabled": false,
+    "hidden": false
+  }
+]

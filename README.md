@@ -96,9 +96,9 @@ Node-RED is an open-source programming tool for wiring together hardware devices
     * Node-RED (used 3.1.3).
 2. Install the following Node-RED modules:
     * node-red-dashboard (3.3.1 used).
-3. We will now create the HMI using Node-RED dashboard capabilities: TODOOOO
-    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/modbus_hmi.json) into your environment.
-      ![nodered_modbushmi](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_modbushmi.png?raw=true)
+3. We will now create the Virtual PLC using Node-RED programming and dashboarding capabilities:
+    * Import and Deploy [this flow](https://github.com/JBsCorner/iiot-workshop/blob/main/code/node-red/nodered_virtualplc.json) into your environment.
+      ![nodered_virtualplcflow](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_virtualplcflow.png?raw=true)
   
 ## PHASE 02: VISUALIZING THE INDUSTRIAL PROCESS
 We have successfully digitized various physical signals from our process. However, it is currently difficult for a human to know the status of the industrial process or to act upon it. Therefore, in this phase, we will establish communication through industrial protocols between our industrial device and an HMI (Human Machine Interface) with the goal of being able to visualize the information and allow basic actions.

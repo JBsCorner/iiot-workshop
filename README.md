@@ -103,19 +103,32 @@ Node-RED is an open-source programming tool for wiring together hardware devices
       ![nodered_virtualplcflow](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_virtualplcflow.png?raw=true)
     * Open Node-RED UI at http://localhost:1880/ui and your Virtual PLC will load. You can check change sampling interval, activate/deactivate sensors and change simulated measurments limits.
       ![nodered_virtualplcdashboard](https://github.com/JBsCorner/iiot-workshop/blob/main/images/nodered_virtualplcdashboard.png?raw=true)
-  
+
 ## PHASE 02: VISUALIZING THE INDUSTRIAL PROCESS
 We have successfully digitized various physical signals from our process. However, it is currently difficult for a human to know the status of the industrial process or to act upon it. Therefore, in this phase, we will establish communication through industrial protocols between our industrial device and an HMI (Human Machine Interface) with the goal of being able to visualize the information and allow basic actions.
 
-### 02.A: CONTROLLINO THROUGH MODBUS TCP
-
-Modbus TCP is a widely used communication protocol that enables the exchange of data between devices in industrial networks. It is an extension of the Modbus protocol, adapted for use over TCP/IP networks, which allows for the seamless integration of industrial devices with the infrastructure of the Internet. Essentially, Modbus TCP facilitates communication between a server, such as a PLC (Programmable Logic Controller) or an industrial computer, and one or more client devices. It operates on a client-server model, where the client initiates requests for data, and the server responds with the requested information. This protocol is highly regarded for its simplicity, reliability and ease of implementation.
+We will take advantage of Modbus TCP for this task. Modbus TCP is a widely used communication protocol that enables the exchange of data between devices in industrial networks. It is an extension of the Modbus protocol, adapted for use over TCP/IP networks, which allows for the seamless integration of industrial devices with the infrastructure of the Internet. Essentially, Modbus TCP facilitates communication between a server, such as a PLC (Programmable Logic Controller) or an industrial computer, and one or more client devices. It operates on a client-server model, where the client initiates requests for data, and the server responds with the requested information. This protocol is highly regarded for its simplicity, reliability and ease of implementation.
 
 ![modbus_logo](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_logo.png?raw=true)
+
+### 02.01: ENABLING MODBUS TCP ON OUR PLC
 
 Modbus supports various types of registers and operations that facilitate diverse communication needs in industrial environments. The primary types of registers include Discrete Inputs and Coils, used for reading and writing boolean values, respectively, and Input Registers and Holding Registers, designed for reading and writing numerical values. Operations can be categorized into reading, where data is retrieved from these registers, and writing, where values are sent to be stored or to modify device settings.
 
 ![modbus](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_tables.png?raw=true)
+
+In our case, we decide to configure the PLC as indicated below:
+* Five Coils (addresses 0 to 4) will be used to activate o deactivate individually each sensor.
+* No Discrete Input will be used.
+* Five Input Registries (addresses 10 to 14) will be used to read sensor values.
+* One Holding Registry (address 20) will be used to set sensor sampling interval.
+
+![modbus_plcsetup](https://github.com/JBsCorner/iiot-workshop/blob/main/images/modbus_plcsetup.jpg?raw=true)
+
+### 02.01.A: CONTROLLINO THROUGH MODBUS TCP
+
+  
+
 
 **REQUIREMENTS**
 

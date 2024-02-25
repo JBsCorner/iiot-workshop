@@ -20,7 +20,7 @@
     "userProps": "",
     "correl": "",
     "expiry": "",
-    "broker": "",
+    "broker": "2b366060a82767d4",
     "x": 1090,
     "y": 120,
     "wires": []
@@ -276,12 +276,12 @@
     "rules": [
       {
         "t": "eq",
-        "v": "cmd/mioti-0-thing/surface-pump/000/sampling-interval",
+        "v": "cmd/{your thing id}/surface-pump/{your asset id}/sampling-interval",
         "vt": "str"
       },
       {
         "t": "eq",
-        "v": "cmd/mioti-0-thing/surface-pump/000/sensor-status",
+        "v": "cmd/{your thing id}/surface-pump/{your asset id}/sensor-status",
         "vt": "str"
       }
     ],
@@ -358,6 +358,37 @@
         "5409a2fe6b275661"
       ]
     ]
+  },
+  {
+    "id": "2b366060a82767d4",
+    "type": "mqtt-broker",
+    "name": "",
+    "broker": "",
+    "port": "1883",
+    "clientid": "",
+    "autoConnect": true,
+    "usetls": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "autoUnsubscribe": true,
+    "birthTopic": "",
+    "birthQos": "0",
+    "birthRetain": "false",
+    "birthPayload": "",
+    "birthMsg": {},
+    "closeTopic": "",
+    "closeQos": "0",
+    "closeRetain": "false",
+    "closePayload": "",
+    "closeMsg": {},
+    "willTopic": "",
+    "willQos": "0",
+    "willRetain": "false",
+    "willPayload": "",
+    "willMsg": {},
+    "userProps": "",
+    "sessionExpiry": ""
   },
   {
     "id": "afc1ae1ab2902065",

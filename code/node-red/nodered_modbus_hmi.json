@@ -11,435 +11,24 @@
     "id": "aca6074167149c0f",
     "type": "comment",
     "z": "d1f182ed52619746",
-    "name": "HMI STATUS LEDS",
+    "name": "HMI SENSOR ACTIVATION",
     "info": "",
-    "x": 130,
-    "y": 420,
+    "x": 160,
+    "y": 60,
     "wires": []
-  },
-  {
-    "id": "74d6d412b51485a3",
-    "type": "ui_switch",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 1",
-    "tooltip": "",
-    "group": "5c599356.2d8a4c",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "passthru": true,
-    "decouple": "false",
-    "topic": "1",
-    "topicType": "str",
-    "style": "",
-    "onvalue": "true",
-    "onvalueType": "bool",
-    "onicon": "",
-    "oncolor": "",
-    "offvalue": "false",
-    "offvalueType": "bool",
-    "officon": "",
-    "offcolor": "",
-    "animate": false,
-    "className": "",
-    "x": 390,
-    "y": 420,
-    "wires": [
-      [
-        "6fa950e56e117543"
-      ]
-    ]
-  },
-  {
-    "id": "6fa950e56e117543",
-    "type": "function",
-    "z": "d1f182ed52619746",
-    "name": "Write Coil",
-    "func": "var ledStatus = msg.payload;\nvar ledAddress = parseInt(msg.topic) - 1;\nmsg.payload = {\n    'fc':5, // function code\n    'unitid': 1,\n    'address': ledAddress,\n    'quantity': 1,\n    'value': ledStatus\n}\nreturn msg;",
-    "outputs": 1,
-    "timeout": 0,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 600,
-    "y": 540,
-    "wires": [
-      [
-        "db88f736336ea803"
-      ]
-    ]
-  },
-  {
-    "id": "f8c92441a56873d0",
-    "type": "modbus-response",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "registerShowMax": 20,
-    "x": 1090,
-    "y": 660,
-    "wires": []
-  },
-  {
-    "id": "db88f736336ea803",
-    "type": "modbus-flex-write",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "showStatusActivities": false,
-    "showErrors": false,
-    "showWarnings": true,
-    "server": "afc1ae1ab2902065",
-    "emptyMsgOnFail": false,
-    "keepMsgProperties": false,
-    "delayOnStart": false,
-    "startDelayTime": "",
-    "x": 790,
-    "y": 540,
-    "wires": [
-      [],
-      [
-        "f8c92441a56873d0",
-        "58ecda98f009e2df"
-      ]
-    ]
-  },
-  {
-    "id": "7a14cbcaa6c23c97",
-    "type": "ui_switch",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 2",
-    "tooltip": "",
-    "group": "5c599356.2d8a4c",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "passthru": true,
-    "decouple": "false",
-    "topic": "2",
-    "topicType": "str",
-    "style": "",
-    "onvalue": "true",
-    "onvalueType": "bool",
-    "onicon": "",
-    "oncolor": "",
-    "offvalue": "false",
-    "offvalueType": "bool",
-    "officon": "",
-    "offcolor": "",
-    "animate": false,
-    "className": "",
-    "x": 390,
-    "y": 480,
-    "wires": [
-      [
-        "6fa950e56e117543"
-      ]
-    ]
-  },
-  {
-    "id": "550d57ce5d3d211d",
-    "type": "ui_switch",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 3",
-    "tooltip": "",
-    "group": "5c599356.2d8a4c",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "passthru": true,
-    "decouple": "false",
-    "topic": "3",
-    "topicType": "str",
-    "style": "",
-    "onvalue": "true",
-    "onvalueType": "bool",
-    "onicon": "",
-    "oncolor": "",
-    "offvalue": "false",
-    "offvalueType": "bool",
-    "officon": "",
-    "offcolor": "",
-    "animate": false,
-    "className": "",
-    "x": 390,
-    "y": 540,
-    "wires": [
-      [
-        "6fa950e56e117543"
-      ]
-    ]
-  },
-  {
-    "id": "027c0dfecc976615",
-    "type": "ui_switch",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 4",
-    "tooltip": "",
-    "group": "5c599356.2d8a4c",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "passthru": true,
-    "decouple": "false",
-    "topic": "4",
-    "topicType": "str",
-    "style": "",
-    "onvalue": "true",
-    "onvalueType": "bool",
-    "onicon": "",
-    "oncolor": "",
-    "offvalue": "false",
-    "offvalueType": "bool",
-    "officon": "",
-    "offcolor": "",
-    "animate": false,
-    "className": "",
-    "x": 390,
-    "y": 600,
-    "wires": [
-      [
-        "6fa950e56e117543"
-      ]
-    ]
-  },
-  {
-    "id": "45590134560c6e2b",
-    "type": "ui_switch",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 5",
-    "tooltip": "",
-    "group": "5c599356.2d8a4c",
-    "order": 0,
-    "width": 0,
-    "height": 0,
-    "passthru": true,
-    "decouple": "false",
-    "topic": "5",
-    "topicType": "str",
-    "style": "",
-    "onvalue": "true",
-    "onvalueType": "bool",
-    "onicon": "",
-    "oncolor": "",
-    "offvalue": "false",
-    "offvalueType": "bool",
-    "officon": "",
-    "offcolor": "",
-    "animate": false,
-    "className": "",
-    "x": 390,
-    "y": 660,
-    "wires": [
-      [
-        "6fa950e56e117543"
-      ]
-    ]
-  },
-  {
-    "id": "58ecda98f009e2df",
-    "type": "function",
-    "z": "d1f182ed52619746",
-    "name": "LED Indicators",
-    "func": "var light = \"\"\nif (msg.values.value){\n    light = \"green\"\n}else{\n    light = \"\"\n}\nvar address = msg.values.address\nmsg = {\n    'payload': light\n}\nswitch (address) {\n  case 0:\n    return [msg,null,null,null,null];\n    break;\n  case 1:\n    return [null,msg,null,null,null];\n    break;\n  case 2:\n    return [null, null,msg,null,null];\n    break;\n  case 3:\n    return [null,null,null,msg,null];\n    break;\n  case 4:\n    return [null,null,null,null,msg];\n    break;\n  default:\n    // Do nothing\n}\n",
-    "outputs": 5,
-    "timeout": "",
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 1080,
-    "y": 540,
-    "wires": [
-      [
-        "9c73e9275ee40d6e"
-      ],
-      [
-        "43fa361dbfb640c7"
-      ],
-      [
-        "f2763860ab48dca6"
-      ],
-      [
-        "50e9371add43d979"
-      ],
-      [
-        "69887aeb42681fa5"
-      ]
-    ],
-    "icon": "node-red/light.svg"
-  },
-  {
-    "id": "9c73e9275ee40d6e",
-    "type": "ui_colour_picker",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 1",
-    "group": "b2c9b73f960204ef",
-    "format": "hex",
-    "outformat": "string",
-    "showSwatch": true,
-    "showPicker": false,
-    "showValue": false,
-    "showHue": false,
-    "showAlpha": false,
-    "showLightness": true,
-    "square": "false",
-    "dynOutput": "false",
-    "order": 2,
-    "width": "1",
-    "height": 1,
-    "passthru": false,
-    "topic": "",
-    "topicType": "str",
-    "className": "",
-    "x": 1350,
-    "y": 480,
-    "wires": [
-      []
-    ],
-    "icon": "node-red/light.svg"
-  },
-  {
-    "id": "43fa361dbfb640c7",
-    "type": "ui_colour_picker",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 2",
-    "group": "b2c9b73f960204ef",
-    "format": "hex",
-    "outformat": "string",
-    "showSwatch": true,
-    "showPicker": false,
-    "showValue": false,
-    "showHue": false,
-    "showAlpha": false,
-    "showLightness": true,
-    "square": "false",
-    "dynOutput": "false",
-    "order": 2,
-    "width": "1",
-    "height": 1,
-    "passthru": false,
-    "topic": "",
-    "topicType": "str",
-    "className": "",
-    "x": 1350,
-    "y": 520,
-    "wires": [
-      []
-    ],
-    "icon": "node-red/light.svg"
-  },
-  {
-    "id": "f2763860ab48dca6",
-    "type": "ui_colour_picker",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 3",
-    "group": "b2c9b73f960204ef",
-    "format": "hex",
-    "outformat": "string",
-    "showSwatch": true,
-    "showPicker": false,
-    "showValue": false,
-    "showHue": false,
-    "showAlpha": false,
-    "showLightness": true,
-    "square": "false",
-    "dynOutput": "false",
-    "order": 2,
-    "width": "1",
-    "height": 1,
-    "passthru": false,
-    "topic": "",
-    "topicType": "str",
-    "className": "",
-    "x": 1350,
-    "y": 560,
-    "wires": [
-      []
-    ],
-    "icon": "node-red/light.svg"
-  },
-  {
-    "id": "50e9371add43d979",
-    "type": "ui_colour_picker",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 4",
-    "group": "b2c9b73f960204ef",
-    "format": "hex",
-    "outformat": "string",
-    "showSwatch": true,
-    "showPicker": false,
-    "showValue": false,
-    "showHue": false,
-    "showAlpha": false,
-    "showLightness": true,
-    "square": "false",
-    "dynOutput": "false",
-    "order": 2,
-    "width": "1",
-    "height": 1,
-    "passthru": false,
-    "topic": "",
-    "topicType": "str",
-    "className": "",
-    "x": 1350,
-    "y": 600,
-    "wires": [
-      []
-    ],
-    "icon": "node-red/light.svg"
-  },
-  {
-    "id": "69887aeb42681fa5",
-    "type": "ui_colour_picker",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "label": "LED 5",
-    "group": "b2c9b73f960204ef",
-    "format": "hex",
-    "outformat": "string",
-    "showSwatch": true,
-    "showPicker": false,
-    "showValue": false,
-    "showHue": false,
-    "showAlpha": false,
-    "showLightness": true,
-    "square": "false",
-    "dynOutput": "false",
-    "order": 2,
-    "width": "1",
-    "height": 1,
-    "passthru": false,
-    "topic": "",
-    "topicType": "str",
-    "className": "",
-    "x": 1350,
-    "y": 640,
-    "wires": [
-      []
-    ],
-    "icon": "node-red/light.svg"
   },
   {
     "id": "309410be9a80b976",
     "type": "ui_slider",
     "z": "d1f182ed52619746",
     "name": "",
-    "label": "Update Interval [s]",
+    "label": "Sampling Interval [s]",
     "tooltip": "",
-    "group": "7cbaf04f.bb57a",
-    "order": 0,
+    "group": "5c599356.2d8a4c",
+    "order": 6,
     "width": "0",
     "height": "0",
-    "passthru": false,
+    "passthru": true,
     "outs": "end",
     "topic": "topic",
     "topicType": "msg",
@@ -447,8 +36,8 @@
     "max": "10",
     "step": "1",
     "className": "",
-    "x": 270,
-    "y": 840,
+    "x": 140,
+    "y": 500,
     "wires": [
       [
         "964fdd5ad06352e5"
@@ -460,15 +49,15 @@
     "type": "function",
     "z": "d1f182ed52619746",
     "name": "Write Holding",
-    "func": "var updateInterval = msg.payload*1000;\nmsg.payload = {\n    'fc':6, // function code\n    'unitid': 1,\n    'address': 400,\n    'quantity': 1,\n    'value': updateInterval\n}\nreturn msg;",
+    "func": "if (msg.disableWrite) {\n    return null;\n} else {\n    var updateInterval = msg.payload * 1000;\n    var modbusAddress = 20\n    msg.payload = {\n        'fc': 6, // function code\n        'unitid': 1,\n        'address': modbusAddress,\n        'quantity': 1,\n        'value': updateInterval\n    }\n    return msg\n}",
     "outputs": 1,
     "timeout": 0,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 480,
-    "y": 840,
+    "x": 400,
+    "y": 500,
     "wires": [
       [
         "f9c9ca34def88137"
@@ -479,7 +68,7 @@
     "id": "f9c9ca34def88137",
     "type": "modbus-flex-write",
     "z": "d1f182ed52619746",
-    "name": "",
+    "name": "Modbus Write Sampling Interval",
     "showStatusActivities": false,
     "showErrors": false,
     "showWarnings": true,
@@ -488,75 +77,30 @@
     "keepMsgProperties": false,
     "delayOnStart": false,
     "startDelayTime": "",
-    "x": 690,
-    "y": 840,
+    "x": 830,
+    "y": 500,
     "wires": [
       [],
       [
-        "f03ed423e1c05c6d",
-        "cc66a36ad2a5d244"
+        "0a22d12a6ec02ad1"
       ]
-    ]
-  },
-  {
-    "id": "e35e09bfc5e702a0",
-    "type": "ui_chart",
-    "z": "d1f182ed52619746",
-    "name": "Humidity",
-    "group": "e24a3bf2257242a5",
-    "order": 2,
-    "width": 0,
-    "height": 0,
-    "label": "",
-    "chartType": "line",
-    "legend": "false",
-    "xformat": "HH:mm:ss",
-    "interpolate": "linear",
-    "nodata": "",
-    "dot": true,
-    "ymin": "0",
-    "ymax": "100",
-    "removeOlder": "1",
-    "removeOlderPoints": "",
-    "removeOlderUnit": "60",
-    "cutout": 0,
-    "useOneColor": false,
-    "useUTC": false,
-    "colors": [
-      "#1f77b4",
-      "#aec7e8",
-      "#ff7f0e",
-      "#2ca02c",
-      "#98df8a",
-      "#d62728",
-      "#ff9896",
-      "#9467bd",
-      "#c5b0d5"
-    ],
-    "outputs": 1,
-    "useDifferentColor": false,
-    "className": "",
-    "x": 1280,
-    "y": 1140,
-    "wires": [
-      []
     ]
   },
   {
     "id": "c0d7baf69e51ae8c",
     "type": "ui_gauge",
     "z": "d1f182ed52619746",
-    "name": "Temperature",
+    "name": "Input Temperature",
     "group": "9ff769e6fe78b2f3",
     "order": 1,
     "width": 0,
     "height": 0,
     "gtype": "gage",
-    "title": "",
+    "title": "Input Temperature",
     "label": "°C",
     "format": "{{value}}",
     "min": 0,
-    "max": "40",
+    "max": "80",
     "colors": [
       "#00b500",
       "#e6e600",
@@ -566,33 +110,23 @@
     "seg2": "",
     "diff": false,
     "className": "",
-    "x": 1290,
-    "y": 1180,
+    "x": 1370,
+    "y": 740,
     "wires": []
   },
   {
     "id": "c0aa5bbaaced0f4d",
     "type": "inject",
     "z": "d1f182ed52619746",
-    "name": "",
-    "props": [
-      {
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
+    "name": "Every Second",
+    "props": [],
     "repeat": "1",
     "crontab": "",
     "once": true,
-    "onceDelay": 0.1,
+    "onceDelay": "0.5",
     "topic": "",
-    "payload": "",
-    "payloadType": "date",
-    "x": 170,
-    "y": 1120,
+    "x": 140,
+    "y": 900,
     "wires": [
       [
         "58a3f4a8177c1c82"
@@ -603,7 +137,7 @@
     "id": "329ab71f360e756b",
     "type": "modbus-flex-getter",
     "z": "d1f182ed52619746",
-    "name": "",
+    "name": "Modbus Read Sensors",
     "showStatusActivities": false,
     "showErrors": false,
     "showWarnings": true,
@@ -616,13 +150,12 @@
     "keepMsgProperties": false,
     "delayOnStart": false,
     "startDelayTime": "",
-    "x": 810,
-    "y": 1120,
+    "x": 820,
+    "y": 900,
     "wires": [
       [],
       [
-        "262b700595afbdfc",
-        "6f862add949290e2"
+        "262b700595afbdfc"
       ]
     ]
   },
@@ -631,7 +164,7 @@
     "type": "function",
     "z": "d1f182ed52619746",
     "name": "Read Sensor Variables",
-    "func": "msg.payload = {\n    'fc': 4, // function code\n    'unitid': 1,\n    'address': 100,\n    'quantity': 2\n}\nreturn msg;",
+    "func": "var modbusAddress = 10\n\nmsg.payload = {\n    'fc': 4, // function code\n    'unitid': 1,\n    'address': modbusAddress,\n    'quantity': 5\n}\nreturn msg;",
     "outputs": 1,
     "timeout": 0,
     "noerr": 0,
@@ -639,7 +172,7 @@
     "finalize": "",
     "libs": [],
     "x": 580,
-    "y": 1120,
+    "y": 900,
     "wires": [
       [
         "329ab71f360e756b"
@@ -651,59 +184,43 @@
     "type": "function",
     "z": "d1f182ed52619746",
     "name": "Process Readings",
-    "func": "var humidity = msg.payload.data[0] / 100;\nvar temperature = msg.payload.data[1] / 100;\n\nvar hMsg = {\n    'payload': humidity\n};\nvar tMsg = {\n    'payload': temperature\n};\nreturn [hMsg,tMsg];",
-    "outputs": 2,
+    "func": "var sensorScales = [\n    100,\n    100,\n    100,\n    10,\n    1000\n]\n\nvar msgs = []\n\nmsg.payload.data.forEach((item, index) => {\n    msgs.push({\n        \"payload\": item/sensorScales[index]\n    })\n});\n\nreturn msgs;",
+    "outputs": 5,
     "timeout": 0,
     "noerr": 0,
     "initialize": "",
     "finalize": "",
     "libs": [],
-    "x": 1050,
-    "y": 1160,
+    "x": 1070,
+    "y": 900,
     "wires": [
-      [
-        "02cef7f8ba683fd4",
-        "e35e09bfc5e702a0"
-      ],
       [
         "c0d7baf69e51ae8c",
         "284613a1b3179960"
+      ],
+      [
+        "3742a6bba250f60d",
+        "c31f3964ede32320"
+      ],
+      [
+        "0ea1a2f607ac34e9",
+        "e9064f45728932d0"
+      ],
+      [
+        "77775a1f817cba16",
+        "3d3a87349e0737bb"
+      ],
+      [
+        "4ea727f974109f06",
+        "c9bd6361f5060b85"
       ]
     ]
-  },
-  {
-    "id": "02cef7f8ba683fd4",
-    "type": "ui_gauge",
-    "z": "d1f182ed52619746",
-    "name": "Humidity",
-    "group": "e24a3bf2257242a5",
-    "order": 1,
-    "width": 0,
-    "height": 0,
-    "gtype": "gage",
-    "title": "",
-    "label": "%",
-    "format": "{{value}}",
-    "min": 0,
-    "max": "100",
-    "colors": [
-      "#00b500",
-      "#e6e600",
-      "#ca3838"
-    ],
-    "seg1": "",
-    "seg2": "",
-    "diff": false,
-    "className": "",
-    "x": 1280,
-    "y": 1100,
-    "wires": []
   },
   {
     "id": "284613a1b3179960",
     "type": "ui_chart",
     "z": "d1f182ed52619746",
-    "name": "Temperature",
+    "name": "Input Temperature",
     "group": "9ff769e6fe78b2f3",
     "order": 2,
     "width": 0,
@@ -716,7 +233,7 @@
     "nodata": "",
     "dot": true,
     "ymin": "0",
-    "ymax": "40",
+    "ymax": "80",
     "removeOlder": "1",
     "removeOlderPoints": "",
     "removeOlderUnit": "60",
@@ -737,8 +254,8 @@
     "outputs": 1,
     "useDifferentColor": false,
     "className": "",
-    "x": 1290,
-    "y": 1220,
+    "x": 1370,
+    "y": 780,
     "wires": [
       []
     ]
@@ -761,7 +278,7 @@
     "allowrate": true,
     "outputs": 1,
     "x": 360,
-    "y": 1120,
+    "y": 900,
     "wires": [
       [
         "0367c2333d6b3d4f"
@@ -772,55 +289,26 @@
     "id": "f03ed423e1c05c6d",
     "type": "link out",
     "z": "d1f182ed52619746",
-    "name": "link out 1",
+    "name": "Sampling Interval Delay",
     "mode": "link",
     "links": [
       "f523255bfbfd667e"
     ],
-    "x": 875,
-    "y": 820,
+    "x": 1325,
+    "y": 580,
     "wires": []
   },
   {
     "id": "f523255bfbfd667e",
     "type": "link in",
     "z": "d1f182ed52619746",
-    "name": "Update Interval Delay",
+    "name": "Sampling Interval Delay",
     "links": [
+      "c06f9560feeb1208",
       "f03ed423e1c05c6d"
     ],
-    "x": 95,
-    "y": 1040,
-    "wires": [
-      [
-        "4e8cce46a5ead3a7"
-      ]
-    ]
-  },
-  {
-    "id": "6f862add949290e2",
-    "type": "modbus-response",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "registerShowMax": 20,
-    "x": 1050,
-    "y": 1080,
-    "wires": []
-  },
-  {
-    "id": "4e8cce46a5ead3a7",
-    "type": "function",
-    "z": "d1f182ed52619746",
-    "name": "Set Update Rate",
-    "func": "var rate = msg.payload.value\n\nmsg = {\n    'rate':rate\n};\nreturn msg;",
-    "outputs": 1,
-    "timeout": 0,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 230,
-    "y": 1040,
+    "x": 55,
+    "y": 840,
     "wires": [
       [
         "58a3f4a8177c1c82"
@@ -828,365 +316,13 @@
     ]
   },
   {
-    "id": "ab4a3ab2a484456e",
-    "type": "comment",
-    "z": "d1f182ed52619746",
-    "name": "HMI INITIALIZATION",
-    "info": "",
-    "x": 140,
-    "y": 40,
-    "wires": []
-  },
-  {
-    "id": "40093babfd1ece59",
-    "type": "modbus-flex-getter",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "showStatusActivities": false,
-    "showErrors": false,
-    "showWarnings": true,
-    "logIOActivities": false,
-    "server": "afc1ae1ab2902065",
-    "useIOFile": false,
-    "ioFile": "",
-    "useIOForPayload": false,
-    "emptyMsgOnFail": false,
-    "keepMsgProperties": false,
-    "delayOnStart": false,
-    "startDelayTime": "",
-    "x": 410,
-    "y": 160,
-    "wires": [
-      [],
-      [
-        "228001c4fffa5a12",
-        "26e1b8adc07aba58"
-      ]
-    ]
-  },
-  {
-    "id": "cf118fdea2e1c2e9",
-    "type": "inject",
-    "z": "d1f182ed52619746",
-    "name": "Initialize Update Interval",
-    "props": [
-      {
-        "p": "payload"
-      },
-      {
-        "p": "topic",
-        "vt": "str"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": true,
-    "onceDelay": "3",
-    "topic": "init",
-    "payload": "{\"fc\":3,\"unitid\":1,\"address\":400,\"quantity\":1}",
-    "payloadType": "json",
-    "x": 190,
-    "y": 160,
-    "wires": [
-      [
-        "40093babfd1ece59"
-      ]
-    ]
-  },
-  {
-    "id": "228001c4fffa5a12",
-    "type": "function",
-    "z": "d1f182ed52619746",
-    "name": "Adapt",
-    "func": "var updateInterval = msg.payload.data[0]\nvar msg1 ={\n    \"payload\": updateInterval / 1000\n}\nvar msg2 ={\n    \"payload\": {\n        \"value\": updateInterval\n    }\n}\n\nreturn [msg1,msg2];",
-    "outputs": 2,
-    "timeout": 0,
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 630,
-    "y": 100,
-    "wires": [
-      [
-        "e8a1394654c49bb9"
-      ],
-      [
-        "c06f9560feeb1208"
-      ]
-    ]
-  },
-  {
-    "id": "ee52c9ca3cb5bd13",
-    "type": "comment",
-    "z": "d1f182ed52619746",
-    "name": "Update Interval",
-    "info": "",
-    "x": 160,
-    "y": 100,
-    "wires": []
-  },
-  {
-    "id": "e8a1394654c49bb9",
-    "type": "link out",
-    "z": "d1f182ed52619746",
-    "name": "Update Interval Dashboard",
-    "mode": "link",
-    "links": [
-      "1b9d23eca5d20f26"
-    ],
-    "x": 755,
-    "y": 80,
-    "wires": []
-  },
-  {
-    "id": "c06f9560feeb1208",
-    "type": "link out",
-    "z": "d1f182ed52619746",
-    "name": "Update Interval Delay",
-    "mode": "link",
-    "links": [],
-    "x": 755,
-    "y": 120,
-    "wires": []
-  },
-  {
-    "id": "1b9d23eca5d20f26",
-    "type": "link in",
-    "z": "d1f182ed52619746",
-    "name": "Update Interval Dashboard",
-    "links": [
-      "e8a1394654c49bb9"
-    ],
-    "x": 95,
-    "y": 840,
-    "wires": [
-      [
-        "309410be9a80b976"
-      ]
-    ]
-  },
-  {
-    "id": "26e1b8adc07aba58",
-    "type": "modbus-response",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "registerShowMax": 20,
-    "x": 850,
-    "y": 220,
-    "wires": []
-  },
-  {
-    "id": "dcefde4856bf8a8a",
-    "type": "modbus-flex-getter",
-    "z": "d1f182ed52619746",
-    "name": "",
-    "showStatusActivities": false,
-    "showErrors": false,
-    "showWarnings": true,
-    "logIOActivities": false,
-    "server": "afc1ae1ab2902065",
-    "useIOFile": false,
-    "ioFile": "",
-    "useIOForPayload": false,
-    "emptyMsgOnFail": false,
-    "keepMsgProperties": false,
-    "delayOnStart": false,
-    "startDelayTime": "",
-    "x": 410,
-    "y": 280,
-    "wires": [
-      [
-        "8af2b2ab8d24f1cf"
-      ],
-      [
-        "26e1b8adc07aba58",
-        "a13071fad81d45f6"
-      ]
-    ]
-  },
-  {
-    "id": "d28b0b681431a620",
-    "type": "inject",
-    "z": "d1f182ed52619746",
-    "name": "Initialize LEDs",
-    "props": [
-      {
-        "p": "payload"
-      }
-    ],
-    "repeat": "",
-    "crontab": "",
-    "once": true,
-    "onceDelay": "3",
-    "topic": "",
-    "payload": "{\"fc\":1,\"unitid\":1,\"address\":0,\"quantity\":5}",
-    "payloadType": "json",
-    "x": 160,
-    "y": 280,
-    "wires": [
-      [
-        "dcefde4856bf8a8a"
-      ]
-    ]
-  },
-  {
-    "id": "10c95a320ae5a1ea",
-    "type": "comment",
-    "z": "d1f182ed52619746",
-    "name": "LEDs",
-    "info": "",
-    "x": 130,
-    "y": 240,
-    "wires": []
-  },
-  {
-    "id": "a13071fad81d45f6",
-    "type": "function",
-    "z": "d1f182ed52619746",
-    "name": "LED Initialize",
-    "func": "var ledStatus = msg.payload.data.slice(0, 5);\n\nfor (let i = 0; i < ledStatus.length; i++) {\n  let msg1 = {\n    \"payload\":ledStatus[i],\n    \"topic\":i\n  };\n  let msg2 = {\n    \"values\":{\n      \"value\":ledStatus[i],\n      \"address\":i\n    }\n  };\n  node.send([msg1, msg2]);\n};",
-    "outputs": 2,
-    "timeout": "",
-    "noerr": 0,
-    "initialize": "",
-    "finalize": "",
-    "libs": [],
-    "x": 630,
-    "y": 320,
-    "wires": [
-      [
-        "d433c52b61e9c96b"
-      ],
-      [
-        "76067c7fbffcd811"
-      ]
-    ],
-    "icon": "node-red/light.svg"
-  },
-  {
-    "id": "d433c52b61e9c96b",
-    "type": "link out",
-    "z": "d1f182ed52619746",
-    "name": "LED Switches",
-    "mode": "link",
-    "links": [
-      "5e8f824a8528297f"
-    ],
-    "x": 775,
-    "y": 300,
-    "wires": []
-  },
-  {
-    "id": "76067c7fbffcd811",
-    "type": "link out",
-    "z": "d1f182ed52619746",
-    "name": "LED Indicators",
-    "mode": "link",
-    "links": [
-      "e20a2eb220a4a1e2"
-    ],
-    "x": 775,
-    "y": 340,
-    "wires": []
-  },
-  {
-    "id": "5e8f824a8528297f",
-    "type": "link in",
-    "z": "d1f182ed52619746",
-    "name": "LED Switches",
-    "links": [
-      "d433c52b61e9c96b"
-    ],
-    "x": 55,
-    "y": 540,
-    "wires": [
-      [
-        "cafc756cbc3f613b"
-      ]
-    ]
-  },
-  {
-    "id": "e20a2eb220a4a1e2",
-    "type": "link in",
-    "z": "d1f182ed52619746",
-    "name": "LED Indicators",
-    "links": [
-      "76067c7fbffcd811"
-    ],
-    "x": 975,
-    "y": 480,
-    "wires": [
-      [
-        "58ecda98f009e2df"
-      ]
-    ]
-  },
-  {
-    "id": "cafc756cbc3f613b",
-    "type": "switch",
-    "z": "d1f182ed52619746",
-    "name": "Initialization",
-    "property": "topic",
-    "propertyType": "msg",
-    "rules": [
-      {
-        "t": "eq",
-        "v": "0",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "1",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "2",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "3",
-        "vt": "str"
-      },
-      {
-        "t": "eq",
-        "v": "4",
-        "vt": "str"
-      }
-    ],
-    "checkall": "true",
-    "repair": false,
-    "outputs": 5,
-    "x": 170,
-    "y": 540,
-    "wires": [
-      [
-        "74d6d412b51485a3"
-      ],
-      [
-        "7a14cbcaa6c23c97"
-      ],
-      [
-        "550d57ce5d3d211d"
-      ],
-      [
-        "027c0dfecc976615"
-      ],
-      [
-        "45590134560c6e2b"
-      ]
-    ]
-  },
-  {
     "id": "861c2e273877f755",
     "type": "comment",
     "z": "d1f182ed52619746",
-    "name": "HMI UPDATE INTERVAL",
+    "name": "HMI SAMPLING INTERVAL",
     "info": "",
-    "x": 150,
-    "y": 760,
+    "x": 160,
+    "y": 420,
     "wires": []
   },
   {
@@ -1196,39 +332,742 @@
     "name": "HMI SENSOR MEASUREMENTS",
     "info": "",
     "x": 180,
-    "y": 960,
+    "y": 740,
     "wires": []
   },
   {
-    "id": "cc66a36ad2a5d244",
-    "type": "modbus-response",
+    "id": "3742a6bba250f60d",
+    "type": "ui_gauge",
+    "z": "d1f182ed52619746",
+    "name": "Output Temperature",
+    "group": "9ff769e6fe78b2f3",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "Output Temperature",
+    "label": "°C",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "80",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1380,
+    "y": 820,
+    "wires": []
+  },
+  {
+    "id": "c31f3964ede32320",
+    "type": "ui_chart",
+    "z": "d1f182ed52619746",
+    "name": "Output Temperature",
+    "group": "9ff769e6fe78b2f3",
+    "order": 4,
+    "width": 0,
+    "height": 0,
+    "label": "",
+    "chartType": "line",
+    "legend": "false",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": true,
+    "ymin": "0",
+    "ymax": "80",
+    "removeOlder": "1",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "60",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 1380,
+    "y": 860,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "0ea1a2f607ac34e9",
+    "type": "ui_gauge",
+    "z": "d1f182ed52619746",
+    "name": "Flow Rate",
+    "group": "e24a3bf2257242a5",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "",
+    "label": "m3/h",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "240",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1340,
+    "y": 900,
+    "wires": []
+  },
+  {
+    "id": "e9064f45728932d0",
+    "type": "ui_chart",
+    "z": "d1f182ed52619746",
+    "name": "Flow Rate",
+    "group": "e24a3bf2257242a5",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "label": "",
+    "chartType": "line",
+    "legend": "false",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": true,
+    "ymin": "0",
+    "ymax": "240",
+    "removeOlder": "1",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "60",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 1340,
+    "y": 940,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "77775a1f817cba16",
+    "type": "ui_gauge",
+    "z": "d1f182ed52619746",
+    "name": "Pressure",
+    "group": "14635e4a1b2f8b3c",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "",
+    "label": "bar",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "10",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1340,
+    "y": 980,
+    "wires": []
+  },
+  {
+    "id": "3d3a87349e0737bb",
+    "type": "ui_chart",
+    "z": "d1f182ed52619746",
+    "name": "Pressure",
+    "group": "14635e4a1b2f8b3c",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "label": "",
+    "chartType": "line",
+    "legend": "false",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": true,
+    "ymin": "0",
+    "ymax": "10",
+    "removeOlder": "1",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "60",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 1340,
+    "y": 1020,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "4ea727f974109f06",
+    "type": "ui_gauge",
+    "z": "d1f182ed52619746",
+    "name": "Power",
+    "group": "660f25f742db3ccb",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "gtype": "gage",
+    "title": "",
+    "label": "kW",
+    "format": "{{value}}",
+    "min": 0,
+    "max": "1",
+    "colors": [
+      "#00b500",
+      "#e6e600",
+      "#ca3838"
+    ],
+    "seg1": "",
+    "seg2": "",
+    "diff": false,
+    "className": "",
+    "x": 1330,
+    "y": 1060,
+    "wires": []
+  },
+  {
+    "id": "c9bd6361f5060b85",
+    "type": "ui_chart",
+    "z": "d1f182ed52619746",
+    "name": "Power",
+    "group": "660f25f742db3ccb",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "label": "",
+    "chartType": "line",
+    "legend": "false",
+    "xformat": "HH:mm:ss",
+    "interpolate": "linear",
+    "nodata": "",
+    "dot": true,
+    "ymin": "0",
+    "ymax": "1",
+    "removeOlder": "1",
+    "removeOlderPoints": "",
+    "removeOlderUnit": "60",
+    "cutout": 0,
+    "useOneColor": false,
+    "useUTC": false,
+    "colors": [
+      "#1f77b4",
+      "#aec7e8",
+      "#ff7f0e",
+      "#2ca02c",
+      "#98df8a",
+      "#d62728",
+      "#ff9896",
+      "#9467bd",
+      "#c5b0d5"
+    ],
+    "outputs": 1,
+    "useDifferentColor": false,
+    "className": "",
+    "x": 1330,
+    "y": 1100,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "f66b47da49b7f831",
+    "type": "inject",
+    "z": "d1f182ed52619746",
+    "name": "Every Second",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 140,
+    "y": 580,
+    "wires": [
+      [
+        "6dc38f0437206182"
+      ]
+    ]
+  },
+  {
+    "id": "39e390359a179272",
+    "type": "function",
+    "z": "d1f182ed52619746",
+    "name": "Set Sampling Interval",
+    "func": "// Convert UInt8Array to number, each memory register takes 8 buffer spaces\nlet updateInterval = msg.payload[0]\n\n// Dashboard Update\nvar msg1 ={\n    \"payload\": updateInterval / 1000,\n    \"disableWrite\": true\n}\n\n// Delay Node Update\nvar msg2 = {\n    \"rate\": updateInterval\n}\n\nreturn [msg1,msg2];",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 700,
+    "y": 580,
+    "wires": [
+      [
+        "309410be9a80b976"
+      ],
+      [
+        "f03ed423e1c05c6d"
+      ]
+    ]
+  },
+  {
+    "id": "6dc38f0437206182",
+    "type": "modbus-getter",
+    "z": "d1f182ed52619746",
+    "name": "Modbus Read Sensors",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "unitid": "",
+    "dataType": "HoldingRegister",
+    "adr": "20",
+    "quantity": "1",
+    "server": "afc1ae1ab2902065",
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 420,
+    "y": 580,
+    "wires": [
+      [
+        "39e390359a179272"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "0a22d12a6ec02ad1",
+    "type": "function",
+    "z": "d1f182ed52619746",
+    "name": "Set Sampling Interval",
+    "func": "msg = {\n    \"rate\": msg.payload.value\n}\n\nreturn msg;",
+    "outputs": 2,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1120,
+    "y": 500,
+    "wires": [
+      [
+        "f03ed423e1c05c6d"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "2629b4dbbe225bc3",
+    "type": "ui_switch",
+    "z": "d1f182ed52619746",
+    "name": "Activate Input Temperature",
+    "label": "Input Temperature",
+    "tooltip": "",
+    "group": "5c599356.2d8a4c",
+    "order": 1,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 1060,
+    "y": 100,
+    "wires": [
+      [
+        "d988c48692c5696d"
+      ]
+    ]
+  },
+  {
+    "id": "c6c28ee5b5c12d22",
+    "type": "ui_switch",
+    "z": "d1f182ed52619746",
+    "name": "Activate Output Temperature",
+    "label": "Output Temperature",
+    "tooltip": "",
+    "group": "5c599356.2d8a4c",
+    "order": 2,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 1060,
+    "y": 160,
+    "wires": [
+      [
+        "d988c48692c5696d"
+      ]
+    ]
+  },
+  {
+    "id": "f5182ec64cc6ac4c",
+    "type": "ui_switch",
+    "z": "d1f182ed52619746",
+    "name": "Activate Flow Rate",
+    "label": "Flow Rate",
+    "tooltip": "",
+    "group": "5c599356.2d8a4c",
+    "order": 3,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 1030,
+    "y": 220,
+    "wires": [
+      [
+        "d988c48692c5696d"
+      ]
+    ]
+  },
+  {
+    "id": "266380613e13fecf",
+    "type": "ui_switch",
+    "z": "d1f182ed52619746",
+    "name": "Activate Pressure",
+    "label": "Pressure",
+    "tooltip": "",
+    "group": "5c599356.2d8a4c",
+    "order": 4,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 1030,
+    "y": 280,
+    "wires": [
+      [
+        "d988c48692c5696d"
+      ]
+    ]
+  },
+  {
+    "id": "01a0bbe97d2425f0",
+    "type": "ui_switch",
+    "z": "d1f182ed52619746",
+    "name": "Activate Power",
+    "label": "Power",
+    "tooltip": "",
+    "group": "5c599356.2d8a4c",
+    "order": 5,
+    "width": 0,
+    "height": 0,
+    "passthru": true,
+    "decouple": "false",
+    "topic": "topic",
+    "topicType": "msg",
+    "style": "",
+    "onvalue": "true",
+    "onvalueType": "bool",
+    "onicon": "",
+    "oncolor": "",
+    "offvalue": "false",
+    "offvalueType": "bool",
+    "officon": "",
+    "offcolor": "",
+    "animate": false,
+    "className": "",
+    "x": 1020,
+    "y": 340,
+    "wires": [
+      [
+        "d988c48692c5696d"
+      ]
+    ]
+  },
+  {
+    "id": "d988c48692c5696d",
+    "type": "function",
+    "z": "d1f182ed52619746",
+    "name": "Write Coil",
+    "func": "if(msg.disableWrite){\n    return null;\n}else{\n    var modbusAddresses = {\n        \"active_input_temperature\": 0,\n        \"active_output_temperature\": 1,\n        \"active_flow_rate\": 2,\n        \"active_pressure\": 3,\n        \"active_power\": 4\n    }\n    msg.payload = {\n        'fc': 5, // function code\n        'unitid': 1,\n        'address': modbusAddresses[msg.topic],\n        'quantity': 1,\n        'value': msg.payload\n    }\n    return msg\n}\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 1320,
+    "y": 240,
+    "wires": [
+      [
+        "c3a37620d1ee3d73"
+      ]
+    ]
+  },
+  {
+    "id": "3842face7665f322",
+    "type": "switch",
     "z": "d1f182ed52619746",
     "name": "",
-    "registerShowMax": 20,
-    "x": 950,
-    "y": 860,
-    "wires": []
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "active_input_temperature",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_output_temperature",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_flow_rate",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_pressure",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "active_power",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 5,
+    "x": 810,
+    "y": 220,
+    "wires": [
+      [
+        "2629b4dbbe225bc3"
+      ],
+      [
+        "c6c28ee5b5c12d22"
+      ],
+      [
+        "f5182ec64cc6ac4c"
+      ],
+      [
+        "266380613e13fecf"
+      ],
+      [
+        "01a0bbe97d2425f0"
+      ]
+    ]
   },
   {
-    "id": "8af2b2ab8d24f1cf",
-    "type": "debug",
+    "id": "fe2c74be71b2775c",
+    "type": "function",
     "z": "d1f182ed52619746",
-    "name": "debug 2",
-    "active": true,
-    "tosidebar": true,
-    "console": false,
-    "tostatus": false,
-    "complete": "false",
-    "statusVal": "",
-    "statusType": "auto",
-    "x": 640,
-    "y": 380,
-    "wires": []
+    "name": "Set Sensor Activation",
+    "func": "var values = msg.payload\nvar sensorStatus = {\n    \"active_input_temperature\": 0,\n    \"active_output_temperature\": 1,\n    \"active_flow_rate\": 2,\n    \"active_pressure\": 3,\n    \"active_power\": 4\n}\n\nvar msgs = []\nfor (let key in sensorStatus ){    \n    let msg = {\n        \"payload\": values[sensorStatus[key]],\n        \"topic\": key,\n        \"disableWrite\": true\n    }\n    msgs.push(msg)\n}\n\nreturn [msgs];",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 620,
+    "y": 220,
+    "wires": [
+      [
+        "3842face7665f322"
+      ]
+    ]
+  },
+  {
+    "id": "c1c0bbedd1c5fac6",
+    "type": "inject",
+    "z": "d1f182ed52619746",
+    "name": "Every Second",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 140,
+    "y": 220,
+    "wires": [
+      [
+        "0da89c872872ed30"
+      ]
+    ]
+  },
+  {
+    "id": "0da89c872872ed30",
+    "type": "modbus-getter",
+    "z": "d1f182ed52619746",
+    "name": "Modbus Read Coils",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "unitid": "",
+    "dataType": "Coil",
+    "adr": "0",
+    "quantity": "5",
+    "server": "afc1ae1ab2902065",
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 370,
+    "y": 220,
+    "wires": [
+      [
+        "fe2c74be71b2775c"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "c3a37620d1ee3d73",
+    "type": "modbus-flex-write",
+    "z": "d1f182ed52619746",
+    "name": "Modbus Write Sensor Activation",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "server": "afc1ae1ab2902065",
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 1550,
+    "y": 240,
+    "wires": [
+      [],
+      []
+    ]
   },
   {
     "id": "5c599356.2d8a4c",
     "type": "ui_group",
-    "name": "LED STATUS",
+    "name": "CONFIGURATION",
     "tab": "e8f17e8683d21bf3",
     "order": 1,
     "disp": true,
@@ -1239,13 +1078,13 @@
   {
     "id": "afc1ae1ab2902065",
     "type": "modbus-client",
-    "name": "Controllino",
+    "name": "PLC Modbus Server",
     "clienttype": "tcp",
     "bufferCommands": true,
     "stateLogEnabled": false,
     "queueLogEnabled": false,
     "failureLogEnabled": true,
-    "tcpHost": "10.0.0.1",
+    "tcpHost": "localhost",
     "tcpPort": "502",
     "tcpType": "DEFAULT",
     "serialPort": "/dev/ttyUSB",
@@ -1266,46 +1105,46 @@
     "showLogs": true
   },
   {
-    "id": "b2c9b73f960204ef",
-    "type": "ui_group",
-    "name": "",
-    "tab": "e8f17e8683d21bf3",
-    "order": 2,
-    "disp": true,
-    "width": "1",
-    "collapse": false,
-    "className": ""
-  },
-  {
-    "id": "7cbaf04f.bb57a",
-    "type": "ui_group",
-    "name": "CONFIGURATION",
-    "tab": "e8f17e8683d21bf3",
-    "order": 3,
-    "disp": true,
-    "width": "7",
-    "collapse": false,
-    "className": ""
-  },
-  {
-    "id": "e24a3bf2257242a5",
-    "type": "ui_group",
-    "name": "HUMIDITY",
-    "tab": "e8f17e8683d21bf3",
-    "order": 5,
-    "disp": true,
-    "width": "7",
-    "collapse": false,
-    "className": ""
-  },
-  {
     "id": "9ff769e6fe78b2f3",
     "type": "ui_group",
     "name": "TEMPERATURE",
     "tab": "e8f17e8683d21bf3",
     "order": 4,
     "disp": true,
-    "width": "7",
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "e24a3bf2257242a5",
+    "type": "ui_group",
+    "name": "FLOW RATE",
+    "tab": "e8f17e8683d21bf3",
+    "order": 5,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "14635e4a1b2f8b3c",
+    "type": "ui_group",
+    "name": "PRESSURE",
+    "tab": "e8f17e8683d21bf3",
+    "order": 5,
+    "disp": true,
+    "width": "6",
+    "collapse": false,
+    "className": ""
+  },
+  {
+    "id": "660f25f742db3ccb",
+    "type": "ui_group",
+    "name": "POWER",
+    "tab": "e8f17e8683d21bf3",
+    "order": 6,
+    "disp": true,
+    "width": "6",
     "collapse": false,
     "className": ""
   },

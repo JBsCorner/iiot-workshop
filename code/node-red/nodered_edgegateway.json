@@ -1,0 +1,391 @@
+[
+  {
+    "id": "bc073fe7af4dcd4c",
+    "type": "tab",
+    "label": "IIOT WKS - EGW",
+    "disabled": false,
+    "info": "",
+    "env": []
+  },
+  {
+    "id": "49d88a5d1bcc0adf",
+    "type": "mqtt out",
+    "z": "bc073fe7af4dcd4c",
+    "name": "MQTT Telemetry",
+    "topic": "tele/mioti-0-thing/surface-pump/000",
+    "qos": "",
+    "retain": "",
+    "respTopic": "",
+    "contentType": "",
+    "userProps": "",
+    "correl": "",
+    "expiry": "",
+    "broker": "",
+    "x": 1090,
+    "y": 120,
+    "wires": []
+  },
+  {
+    "id": "fa2b2ae380be24c8",
+    "type": "inject",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Every Second",
+    "props": [
+      {
+        "p": "payload"
+      }
+    ],
+    "repeat": "1",
+    "crontab": "",
+    "once": true,
+    "onceDelay": "0.5",
+    "topic": "",
+    "payload": "",
+    "payloadType": "date",
+    "x": 140,
+    "y": 260,
+    "wires": [
+      [
+        "502ae2d9f69add0b",
+        "3bc359809a68b70e",
+        "3b4271f1add243bd"
+      ]
+    ]
+  },
+  {
+    "id": "758818d662ef6cc8",
+    "type": "function",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Process Readings",
+    "func": "// Transformation Dictionary\nconst dictionary = [{\n    \"name\": \"INPUT_TEMPERATURE\",\n    \"decimalPositions\": 2\n},\n{\n    \"name\": \"OUTPUT_TEMPERATURE\",\n    \"decimalPositions\": 2\n},\n{\n    \"name\": \"FLOW_RATE\",\n    \"decimalPositions\": 2\n},\n{\n    \"name\": \"PRESSURE\",\n    \"decimalPositions\": 1\n},\n{\n    \"name\": \"POWER\",\n    \"decimalPositions\": 3\n}\n]\n\n// Received array of values\nvar values = msg.payload\n\n// Build msg.payload\nlet payload = {};\n\n// For each element\ndictionary.forEach((item, index) => {\n    if (flow.get(item.name)){\n        // Get raw value\n        const rawValue = values[index];\n        // Unscale value\n        const adjustedValue = rawValue / Math.pow(10, item.decimalPositions);\n        // Add to payload\n        payload[item.name] = adjustedValue;\n    }\n});\npayload.TIMESTAMP = Date.now();\nmsg.payload = payload;\n\nreturn msg;\n\n\n\n\n\n\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 850,
+    "y": 120,
+    "wires": [
+      [
+        "49d88a5d1bcc0adf"
+      ]
+    ]
+  },
+  {
+    "id": "502ae2d9f69add0b",
+    "type": "delay",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Update Interval",
+    "pauseType": "rate",
+    "timeout": "5",
+    "timeoutUnits": "seconds",
+    "rate": "1",
+    "nbRateUnits": "1",
+    "rateUnits": "second",
+    "randomFirst": "1",
+    "randomLast": "5",
+    "randomUnits": "seconds",
+    "drop": true,
+    "allowrate": true,
+    "outputs": 1,
+    "x": 360,
+    "y": 120,
+    "wires": [
+      [
+        "b6ce9fee52cfa9ea"
+      ]
+    ]
+  },
+  {
+    "id": "a7c3215661071794",
+    "type": "comment",
+    "z": "bc073fe7af4dcd4c",
+    "name": "TELEMETRY",
+    "info": "",
+    "x": 110,
+    "y": 60,
+    "wires": []
+  },
+  {
+    "id": "b6ce9fee52cfa9ea",
+    "type": "modbus-getter",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Modbus Read Sensors",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "unitid": "1",
+    "dataType": "InputRegister",
+    "adr": "10",
+    "quantity": "5",
+    "server": "afc1ae1ab2902065",
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 600,
+    "y": 120,
+    "wires": [
+      [
+        "758818d662ef6cc8"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "3bc359809a68b70e",
+    "type": "modbus-getter",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Modbus Read Activation",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "unitid": "1",
+    "dataType": "Coil",
+    "adr": "0",
+    "quantity": "5",
+    "server": "afc1ae1ab2902065",
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 610,
+    "y": 260,
+    "wires": [
+      [
+        "0b30ba37484ba367"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "0b30ba37484ba367",
+    "type": "function",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Set Activation",
+    "func": "// Transformation Dictionary\nconst dictionary = [\n    \"INPUT_TEMPERATURE\",\n    \"OUTPUT_TEMPERATURE\",\n    \"FLOW_RATE\",\n    \"PRESSURE\",\n    \"POWER\"\n]\n\ndictionary.forEach((item, index) => {\n    flow.set(item, msg.payload[index]);    \n});\n\nreturn null;",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 840,
+    "y": 260,
+    "wires": [
+      []
+    ]
+  },
+  {
+    "id": "3b4271f1add243bd",
+    "type": "modbus-getter",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Modbus Read Sampling Interval",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "logIOActivities": false,
+    "unitid": "1",
+    "dataType": "HoldingRegister",
+    "adr": "20",
+    "quantity": "1",
+    "server": "afc1ae1ab2902065",
+    "useIOFile": false,
+    "ioFile": "",
+    "useIOForPayload": false,
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 630,
+    "y": 360,
+    "wires": [
+      [
+        "a292bea3b61d0fe3"
+      ],
+      []
+    ]
+  },
+  {
+    "id": "a292bea3b61d0fe3",
+    "type": "function",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Set Update Interval",
+    "func": "return {\n    \"rate\": msg.payload[0]\n};",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 890,
+    "y": 360,
+    "wires": [
+      [
+        "502ae2d9f69add0b"
+      ]
+    ]
+  },
+  {
+    "id": "dbf5fbe902231dff",
+    "type": "comment",
+    "z": "bc073fe7af4dcd4c",
+    "name": "COMMANDS",
+    "info": "",
+    "x": 110,
+    "y": 460,
+    "wires": []
+  },
+  {
+    "id": "52d6774617a276f0",
+    "type": "mqtt in",
+    "z": "bc073fe7af4dcd4c",
+    "name": "MQTT Input",
+    "topic": "cmd/mioti-0-thing/#",
+    "qos": "1",
+    "datatype": "auto-detect",
+    "broker": "",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 110,
+    "y": 560,
+    "wires": [
+      [
+        "61bdcbae478d4db4"
+      ]
+    ]
+  },
+  {
+    "id": "61bdcbae478d4db4",
+    "type": "switch",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Topic Switch",
+    "property": "topic",
+    "propertyType": "msg",
+    "rules": [
+      {
+        "t": "eq",
+        "v": "cmd/mioti-0-thing/surface-pump/000/sampling-interval",
+        "vt": "str"
+      },
+      {
+        "t": "eq",
+        "v": "cmd/mioti-0-thing/surface-pump/000/sensor-status",
+        "vt": "str"
+      }
+    ],
+    "checkall": "true",
+    "repair": false,
+    "outputs": 2,
+    "x": 310,
+    "y": 560,
+    "wires": [
+      [
+        "9832ce8bd05b2f53"
+      ],
+      [
+        "66ab1f2483ebcdb6"
+      ]
+    ]
+  },
+  {
+    "id": "5409a2fe6b275661",
+    "type": "modbus-flex-write",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Modbus Write",
+    "showStatusActivities": false,
+    "showErrors": false,
+    "showWarnings": true,
+    "server": "afc1ae1ab2902065",
+    "emptyMsgOnFail": false,
+    "keepMsgProperties": false,
+    "delayOnStart": false,
+    "startDelayTime": "",
+    "x": 740,
+    "y": 560,
+    "wires": [
+      [],
+      []
+    ]
+  },
+  {
+    "id": "9832ce8bd05b2f53",
+    "type": "function",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Write Holding",
+    "func": "var updateInterval = msg.payload.VALUE * 1000;\nvar modbusAddress = 20\nmsg.payload = {\n    'fc': 6, // function code\n    'unitid': 1,\n    'address': modbusAddress,\n    'quantity': 1,\n    'value': updateInterval\n}\nreturn msg",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 540,
+    "y": 520,
+    "wires": [
+      [
+        "5409a2fe6b275661"
+      ]
+    ]
+  },
+  {
+    "id": "66ab1f2483ebcdb6",
+    "type": "function",
+    "z": "bc073fe7af4dcd4c",
+    "name": "Write Coil",
+    "func": "var modbusAddresses = {\n    \"INPUT_TEMPERATURE\": 0,\n    \"OUTPUT_TEMPERATURE\": 1,\n    \"FLOW_RATE\": 2,\n    \"PRESSURE\": 3,\n    \"POWER\": 4\n}\nvar msgs = []\nfor (let key in modbusAddresses) {\n    if (key in msg.payload){\n        let modbusAddress = modbusAddresses[key]\n        let write = {\n            \"payload\": {\n                'fc': 5, // function code\n                'unitid': 1,\n                'address': modbusAddress,\n                'quantity': 1,\n                'value': +msg.payload[key]\n            }\n        }\n        msgs.push(write)\n    }\n}\n\nreturn [msgs]\n",
+    "outputs": 1,
+    "timeout": 0,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 520,
+    "y": 580,
+    "wires": [
+      [
+        "5409a2fe6b275661"
+      ]
+    ]
+  },
+  {
+    "id": "afc1ae1ab2902065",
+    "type": "modbus-client",
+    "name": "PLC Modbus Server",
+    "clienttype": "tcp",
+    "bufferCommands": true,
+    "stateLogEnabled": false,
+    "queueLogEnabled": false,
+    "failureLogEnabled": true,
+    "tcpHost": "localhost",
+    "tcpPort": "502",
+    "tcpType": "DEFAULT",
+    "serialPort": "/dev/ttyUSB",
+    "serialType": "RTU-BUFFERD",
+    "serialBaudrate": "9600",
+    "serialDatabits": "8",
+    "serialStopbits": "1",
+    "serialParity": "none",
+    "serialConnectionDelay": "100",
+    "serialAsciiResponseStartDelimiter": "0x3A",
+    "unit_id": "1",
+    "commandDelay": "1",
+    "clientTimeout": "1000",
+    "reconnectOnTimeout": true,
+    "reconnectTimeout": "2000",
+    "parallelUnitIdsAllowed": true,
+    "showWarnings": true,
+    "showLogs": true
+  }
+]
